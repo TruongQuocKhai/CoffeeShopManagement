@@ -25,7 +25,7 @@ namespace CoffeeShop.ADO
             private set { instance = value; }
         }
 
-        // Lay id cua bill
+        // Lấy thông tin bill theo id của bàn
         public int GetUncheckBillIdByTableId(int id)
         {
             DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM bill WHERE table_id = " + id + " and status = 0");
@@ -33,19 +33,29 @@ namespace CoffeeShop.ADO
             if (data.Rows.Count > 0)
             {
                 BillDTO bill = new BillDTO(data.Rows[0]);
+                return bill.Id;
             }
-            return -1;
+            else
+            {
+                return -1; // bàn đang trống, ko có bill nào
+            }
         }
 
         public void InsertBill(int id)
         {
-            DataProvider.Instance.ExecuteNonQuery("exc USP_InsertBill @table_id", new object[] { id });
-        }
+            DataProvider.Instance.ExecuteNonQuery("exec USP_InsertBill @table_id" , new object[] { id });
+        }                                            
 
 
         public int GetMaxIdBill()
+        { // try catch -> return 1;
+            return (int)DataProvider.Instance.ExecuteScalarQuery("SELECT MAX(id) FROM bill");
+        }
+
+        public void Checkout(int id)
         {
-            return DataProvider.Instance.ExecuteScalarQuery("SELECT MAX(id) FROM bill");
+            string query = "UPDATE bill SET status = 1 WHERE id = " +id;
+            DataProvider.Instance.ExecuteNonQuery(query);
         }
 
 

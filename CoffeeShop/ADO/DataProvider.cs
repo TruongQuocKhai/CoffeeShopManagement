@@ -61,38 +61,7 @@ namespace CoffeeShop.ADO
         }
 
         // ExcuteNonQuery chỉ trả về kết quả số dòng dữ liệu bị ảnh hưởng. (update, insert, delete)
-        public Object ExecuteNonQuery(string query, object[] parameter = null)
-        {
-            Object data = 0;
-
-            using (SqlConnection connection = new SqlConnection(connectionStr))
-            {
-                connection.Open();
-
-                // command chiu trach nhiem thuc thi truy van CRUD
-                SqlCommand command = new SqlCommand(query, connection);
-
-                if (parameter != null)
-                {
-                    string[] listPara = query.Split(' ');
-                    int i = 0;
-                    foreach (string item in listPara)
-                    {
-                        if (item.Contains('@'))
-                        {
-                            // parameter truyen cac tham so an toan cho cau truy van
-                            command.Parameters.AddWithValue(item, parameter[i]);
-                            i++;
-                        }
-                    }
-                }
-                connection.Close();
-            }
-            return data;
-        }
-
-        // ExcuteScalar thi hành câu lệnh Sql trả về giá trị là cột đầu tiên của dòng đầu tiên
-        public int ExecuteScalarQuery(string query, object[] parameter = null)
+        public int ExecuteNonQuery(string query, object[] parameter = null)
         {
             int data = 0;
 
@@ -117,7 +86,39 @@ namespace CoffeeShop.ADO
                         }
                     }
                 }
-                
+                data = command.ExecuteNonQuery();
+                connection.Close();
+            }
+            return data;
+        }
+
+        // ExcuteScalar thi hành câu lệnh Sql trả về giá trị là cột đầu tiên của dòng đầu tiên
+        public object ExecuteScalarQuery(string query, object[] parameter = null)
+        {
+            object data = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionStr))
+            {
+                connection.Open();
+
+                // command chiu trach nhiem thuc thi truy van CRUD
+                SqlCommand command = new SqlCommand(query, connection);
+
+                if (parameter != null)
+                {
+                    string[] listPara = query.Split(' ');
+                    int i = 0;
+                    foreach (string item in listPara)
+                    {
+                        if (item.Contains('@'))
+                        {
+                            // parameter truyen cac tham so an toan cho cau truy van
+                            command.Parameters.AddWithValue(item, parameter[i]);
+                            i++;
+                        }
+                    }
+                }
+                data = command.ExecuteScalar();
                 connection.Close();
             }
             return data;

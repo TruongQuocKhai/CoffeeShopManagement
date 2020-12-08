@@ -27,7 +27,6 @@ namespace CoffeeShop
             {
                 fTableManager f = new fTableManager();
                 f.ShowDialog();
-
             }
             else
             {

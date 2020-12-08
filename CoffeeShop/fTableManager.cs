@@ -21,7 +21,6 @@ namespace CoffeeShop
 
             LoadTable();
             LoadCategory();
-
         }
 
         // Các event và properties tách ra bằng region
@@ -29,6 +28,7 @@ namespace CoffeeShop
         // Load table
         void LoadTable()
         {
+            flpTable.Controls.Clear();
             List<TableDTO> tableList = TableADO.Instance.LoadTableList();
 
             foreach (TableDTO item in tableList)
@@ -53,7 +53,7 @@ namespace CoffeeShop
             }
         }
 
-        // Load danh muc mon an
+        // Load Food Category
         void LoadCategory()
         {
             List<CategoryDTO> listCategory = CategoryADO.Instance.GetListCategory();
@@ -106,8 +106,8 @@ namespace CoffeeShop
         }
 
 
-        #endregion
-
+       
+        // combo box Category
         private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             int id = 0;
@@ -118,27 +118,52 @@ namespace CoffeeShop
             CategoryDTO selected = cb.SelectedItem as CategoryDTO;
             id = selected.Id;
 
+            // Load danh sach mon an theo category
             LoadFoodListByCategoryId(id);
         }
 
+
+        // Add food
         private void btnAddFood_Click(object sender, EventArgs e)
         {
             TableDTO table = lsvBill.Tag as TableDTO; // Lấy dữ liệu của bảng table_food qua listBill 
-            int billId = BillADO.Instance.GetUncheckBillIdByTableId(table.Id); // Lay id cua bill
+            int billId = BillADO.Instance.GetUncheckBillIdByTableId(table.Id); // Lay thong tin bill du vao id table
             int foodId = (cbFood.SelectedItem as FoodDTO).Id;
             int count = (int)nmFoodCount.Value;
-            if (billId == -1)
+            if (billId == -1) // billId == -1: bàn trống, ko có bill -> insert bill mới
             {
                 BillADO.Instance.InsertBill(table.Id);
                 BillInforADO.Instance.InsertBillInfo(BillADO.Instance.GetMaxIdBill(), foodId, count);
-
             }
-
+            else // bàn có người, bill đã tồn tại -> Insert bill dựa vào billId đã có
+            {
+                BillInforADO.Instance.InsertBillInfo(billId, foodId, count);
+            }
+            ShowBill(table.Id);
+            LoadTable();  // update Status again
         }
 
-        //private void cbFood_SelectedIndexChanged(object sender, EventArgs e)
-        //{
+        // Bill payment button
+        // Change the Status of the Table
+        // 
+        private void btnCheckout_Click(object sender, EventArgs e)
+        {
+            // Get the current table
+            TableDTO table = lsvBill.Tag as TableDTO;
+            // Get bill by talbe_id
+            int billId = BillADO.Instance.GetUncheckBillIdByTableId(table.Id);
 
-        //}
+            if (billId != -1) // bill already exist, the table have someone
+            {
+                if (MessageBox.Show("Bạn muốn thanh toán hóa đơn cho "+table.Name +"?", "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                {
+                    BillADO.Instance.Checkout(billId);
+                    ShowBill(table.Id);
+                    LoadTable(); // update Status again
+                }
+            }
+        }
+
+        #endregion
     }
 }

@@ -117,13 +117,6 @@ select * from table_food
 
 exec USP_GetTableList
 
-update table_food set status = N'Có người' where id = 9
-
-
-select * from bill
-select * from bill_info
-select * from food
-select * from food_category
 
 -- insert category
 insert into food_category values(N'Hải sản');
@@ -143,8 +136,11 @@ insert into food values(N'Cá lốc nướng', 7, 110000);
 insert into food values(N'Gỏi bò bóp thấu', 3, 90000);
 insert into food values(N'Thơm, ổi, xoài, dưa hấu', 8, 50000);
 insert into food values(N'Cà na rang muối', 2, 30000);
-insert into food values(N'Gỏi bò bóp thấu');
-insert into food values(N'Gỏi bò bóp thấu');
+insert into food values(N'Bò nướng', 3, 150000);
+insert into food values(N'Bò lúc lắc', 3, 90000);
+insert into food values(N'Chân gà nướng', 6, 60000);
+insert into food values(N'Mề gà nướng', 6, 70000);
+insert into food values(N'Gà nướng', 6, 100000);
 
 -- insert Bill
 insert into bill values(GETDATE(), null, 1, 0);
@@ -162,8 +158,6 @@ insert into bill_info values (4, 1, 4);
 select f.name, bi.count, f.price, f.price*bi.count as total_price from bill_info as bi, bill as b, food f
 where bi.bill_id = b.id and bi.food_id = f.id and b.table_id = 3 
 
-select * from food_category
-select * from food
 
 -- Create procedure insert bill
 create proc USP_InsertBill
@@ -171,41 +165,87 @@ create proc USP_InsertBill
 as
 begin
 	insert into bill(checkin_date, checkout_date, table_id, status)
-	values (GETDATE(), null, 0,@table_id );
-	
+	values (GETDATE(), null, @table_id, 0 );
 end
 
+-- TẠO PROCEDURE INSERT BILL INFO
 
 create proc USP_InsertBillInfo
-@bill_id int, @food_id int, @count int
+@bill_id int, @food_id int, @count int -- Khai báo 3 biến truyền vào
 as
 begin
 	insert into bill_info (bill_id, food_id, count)
 	values (@bill_id, @food_id, @count)
 end
 
+-- ALTER PROCEDURE INSERT BILL INFO
 
-alter proc USP_InsertBillInfo
-@bill_id int, @food_id int, @count int
+create proc USP_InsertBillInfo
+@bill_id int, @food_id int, @count int -- khai báo biến truyền vào
 as
 begin
-	declare @isExistBillInfo int
-	declare @foodCount int
+	declare @isExistBillInfo int -- biến: bill đã tồn tại hay chưa
+	declare @foodCount int		 -- biến: số lượng từng món 
 
-	select @isExistBillInfo = count(*), @foodCount = count from bill_info
+	select @isExistBillInfo = id, @foodCount = count from bill_info
 	where bill_id = @bill_id and food_id = @food_id
 
-	if(@isExistBillInfo > 0)
+	if(@isExistBillInfo > 0)  -- bill đã tồn tại thì thực hiện update count và delete count
 	begin
-		update bill_info set count = @foodCount + @count 
+		declare @newCount int = @foodCount + @count
+		if (@newCount > 0) -- Nếu số lượng trong bill > 0 thì cộng lên
+			update bill_info set count = @foodCount + @count where food_id = @food_id 
+		else	
+			delete bill_info where bill_id = @bill_id and food_id = @food_id
 	end
-	else
+	else  -- ngược lại bill chưa tồn tại insert mới bảng bill_info
 	begin
 		insert into bill_info (bill_id, food_id, count)
 		values (@bill_id, @food_id, @count) 
 	end
 end
 
- 
 
+-- CREAE TRIGGER UPDATE BILL INFO
+create trigger UTG_UpdateBillInfo
+on bill_info for insert, update
+as
+begin
+	declare @bill_id int
+	select @bill_id = bill_id from inserted
+
+	declare @table_id int 
+	select @table_id = table_id from bill where id = @bill_id and status = 0
+
+	update table_food set status = N'Có người' where id = @table_id
+end
+
+
+-- CREAE TRIGGER UPDATE BILL
+create trigger UTG_UpdateBill
+on bill for update
+as
+begin
+	declare @bill_id int 
+	select @bill_id = id from inserted
+	
+	declare @table_id int
+	select @table_id = table_id from bill where id = @bill_id
+	
+	declare @count int = 0
+	select @count = count(*) from bill where table_id = @table_id and status = 0
+	
+	if(@count = 0)
+		update table_food set status = N'Trống' where id = @table_id   
+end
+
+
+SELECT f.name, bi.count, f.price, f.price*bi.count as total_price FROM bill_info as bi, bill as b, food f WHERE bi.bill_id = b.id and bi.food_id = f.id and b.status = 0 and b.table_id = 6	
+
+
+select * from bill
+select * from bill_info
+select * from food
+select * from food_category
+select * from table_food
 					   
