@@ -52,10 +52,17 @@ namespace CoffeeShop.ADO
             return (int)DataProvider.Instance.ExecuteScalarQuery("SELECT MAX(id) FROM bill");
         }
 
-        public void Checkout(int id)
+        public void Checkout(int id, float totalPrice)
         {
-            string query = "UPDATE bill SET status = 1 WHERE id = " +id;
+            string query = "UPDATE bill SET checkout_date = GETDATE(), status = 1, "+ "totalPrice = " + totalPrice + "WHERE id = " +id;
             DataProvider.Instance.ExecuteNonQuery(query);
+        }
+
+
+        public DataTable GetListBill(DateTime checkin, DateTime checkout)
+        {
+            DataProvider.Instance.ExecuteQuery("exec USP_GetListBill @checkin @checkout ", new object[] { checkin, checkout });
+
         }
 
 

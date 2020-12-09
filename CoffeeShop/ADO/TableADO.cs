@@ -42,5 +42,10 @@ namespace CoffeeShop.ADO
             }
             return tableList;
         }
+
+        public void SwitchTable(int id1, int id2)
+        {
+            DataProvider.Instance.ExecuteQuery("USP_SwitchTable @tableId1 , @tableId2 ", new object[] { id1, id2 });
+        }
     }
 }

@@ -102,7 +102,7 @@ begin
 	select * from account where username = @username and password = @password
 end
 
--- Cau lenh insert 10 dong bang table_food
+-- insert 10 rows into table_food
 declare @i int = 0
 while @i <= 10
 begin 
@@ -110,37 +110,42 @@ begin
    set @i = @i + 1
 end
 
-
+-- CREATE PROCEDURE GET TABLE LIST
 create proc USP_GetTableList
 as 
 select * from table_food
 
 exec USP_GetTableList
 
-
 -- insert category
 insert into food_category values(N'Hải sản');
-insert into food_category values(N'Ốc');
+--insert into food_category values(N'Ốc');
 insert into food_category values(N'Bò');
 insert into food_category values(N'Heo');
-insert into food_category values(N'Dê');
+--insert into food_category values(N'Dê');
 insert into food_category values(N'Gà');
-insert into food_category values(N'Cá');
+--insert into food_category values(N'Cá');
 insert into food_category values(N'Trái cây');
+insert into food_category values(N'Nước các loại');
 
 -- insert Food
 insert into food values(N'Lẩu gà hầm sả', 6, 120000);
 insert into food values(N'Cánh gà chiên nước mắm', 6, 60000);
 insert into food values(N'Tôm nướng muối ướt',1, 50000);
-insert into food values(N'Cá lốc nướng', 7, 110000);
+--insert into food values(N'Cá lốc nướng', 7, 110000);
 insert into food values(N'Gỏi bò bóp thấu', 3, 90000);
 insert into food values(N'Thơm, ổi, xoài, dưa hấu', 8, 50000);
-insert into food values(N'Cà na rang muối', 2, 30000);
+--insert into food values(N'Cà na rang muối', 2, 30000);
 insert into food values(N'Bò nướng', 3, 150000);
 insert into food values(N'Bò lúc lắc', 3, 90000);
 insert into food values(N'Chân gà nướng', 6, 60000);
 insert into food values(N'Mề gà nướng', 6, 70000);
 insert into food values(N'Gà nướng', 6, 100000);
+insert into food values(N'Cafe đen', 9, 17000);
+insert into food values(N'Cafe sữa', 9, 20000);
+insert into food values(N'7 up', 9, 15000);
+insert into food values(N'Coca', 9, 15000);
+insert into food values(N'Sitting', 9, 15000);
 
 -- insert Bill
 insert into bill values(GETDATE(), null, 1, 0);
@@ -165,7 +170,7 @@ create proc USP_InsertBill
 as
 begin
 	insert into bill(checkin_date, checkout_date, table_id, status)
-	values (GETDATE(), null, @table_id, 0 );
+	values (GETDATE(), null, @table_id, 0);
 end
 
 -- TẠO PROCEDURE INSERT BILL INFO
@@ -207,7 +212,7 @@ end
 
 
 -- CREAE TRIGGER UPDATE BILL INFO
-create trigger UTG_UpdateBillInfo
+alter trigger UTG_UpdateBillInfo
 on bill_info for insert, update
 as
 begin
@@ -217,7 +222,22 @@ begin
 	declare @table_id int 
 	select @table_id = table_id from bill where id = @bill_id and status = 0
 
-	update table_food set status = N'Có người' where id = @table_id
+	-- Xử lý chuyển bàn đổi status
+	declare @count int
+	select @count = count(*) from bill_info where bill_id = @bill_id
+
+	if(@count > 0)
+	begin
+		update table_food set status = N'Trống' where id = @table_id 
+	end
+	else 
+	begin
+		print @table_id
+		print @bill_id
+		print @count
+
+		update table_food set status = N'Có người' where id = @table_id 
+	end
 end
 
 
@@ -240,7 +260,50 @@ begin
 end
 
 
-SELECT f.name, bi.count, f.price, f.price*bi.count as total_price FROM bill_info as bi, bill as b, food f WHERE bi.bill_id = b.id and bi.food_id = f.id and b.status = 0 and b.table_id = 6	
+-- CREATE PROCEDURE CHUYEN BAN
+create proc USP_SwitchTable
+@tableId1 int, @tableId2 int 
+as
+begin
+	declare @firstBillId int 
+	declare @secondBillId int
+	declare @isFirstTableEmpty int = 1
+	declare @isSecondTableEmpty int = 1
+
+	select @secondBillId = id from bill where table_id = @tableId2 and status = 0
+	select @firstBillId = id from bill where table_id = @tableId1 and status = 0
+
+	-- neu bill 1 null -> tao 1 bill moi
+	if(@firstBillId is null)
+	begin
+		insert into bill (checkin_date, checkout_date, table_id, status)
+		values (GETDATE(), null, @tableId1, 0);
+
+		select @firstBillId = max(id) from bill where table_id = @tableId1 and status = 0 
+	end
+	select @isFirstTableEmpty = count(*) from bill_info where bill_id = @firstBillId 
+
+	-- bill 2
+	if(@secondBillId is null)
+	begin
+		insert into bill (checkin_date, checkout_date, table_id, status)
+		values (GETDATE(), null, @tableId2, 0);
+
+		select @secondBillId = max(id) from bill where table_id = @tableId2 and status = 0 
+	end
+
+	select @isSecondTableEmpty = count(*) from bill_info where bill_id = @secondBillId 
+	select id into BillInfoTableId from bill_info where bill_id = @secondBillId
+	update bill_info set bill_id = @secondBillId where bill_id = @firstBillId
+	update bill_info set bill_id = @firstBillId where id in (select * from BillInfoTableId)
+
+	drop table BillInfoTableId
+	if(@isFirstTableEmpty = 0)
+		update table_food set status = N'Trống' where id = @tableId2
+	if(@isSecondTableEmpty = 0)
+		update table_food set status = N'Trống' where id = @tableId1
+end
+
 
 
 select * from bill
@@ -248,4 +311,25 @@ select * from bill_info
 select * from food
 select * from food_category
 select * from table_food
+
+delete bill_info
+delete bill
+update table_food set status = N'Trống'
+
+alter table bill
+add totalPrice float
+
+-- CREATE PROCEDURE GET LIST BILL
+create proc  
+@checkin date, @checkout date
+as
+begin
+	select t.name, b.totalPrice, b.checkin_date, b.checkout_date 
+	from bill as b, table_food as t
+	where checkin_date >= @checkin and checkout_date <= @checkout and b.status = 1 and b.table_id = t.id
+end 
+
+
+
+
 					   
