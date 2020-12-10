@@ -80,7 +80,7 @@ namespace CoffeeShop.ADO
                     {
                         if (item.Contains('@'))
                         {
-                            // parameter truyen cac tham so an toan cho cau truy van
+                            // truyền mảng parameter vào item tương ứng: @username = 'Admin'
                             command.Parameters.AddWithValue(item, parameter[i]);
                             i++;
                         }

@@ -24,13 +24,26 @@ namespace CoffeeShop.ADO
             private set { instance = value; }
         }
 
-
         // Lay mon an theo id danh muc
         public List<FoodDTO> GetFoodListByCategoryId(int id)
         {
             List<FoodDTO> listFood = new List<FoodDTO>();
 
             string query = "SELECT * FROM food WHERE food_category_id = " + id;
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
+
+            foreach (DataRow item in data.Rows)
+            {
+                FoodDTO food = new FoodDTO(item);
+                listFood.Add(food);
+            }
+            return listFood;
+        }
+
+        public List<FoodDTO> GetListFood()
+        {
+            List<FoodDTO> listFood = new List<FoodDTO>();
+            string query = "SELECT * FROM food";
             DataTable data = DataProvider.Instance.ExecuteQuery(query);
 
             foreach (DataRow item in data.Rows)

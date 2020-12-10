@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CoffeeShop.ADO;
+using CoffeeShop.DTO;
 
 namespace CoffeeShop
 {
@@ -20,13 +21,16 @@ namespace CoffeeShop
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string userName = txbUserName.Text;
+            string username = txbUserName.Text;
             string password = txbPassword.Text;
 
-            if (Login(userName, password))
+            if (Login(username, password))
             {
-                fTableManager f = new fTableManager();
+                AccountDTO loginAccount = AccountADO.Instane.GetAccountByUsername(username);
+                fTableManager f = new fTableManager(loginAccount);
+                this.Hide();
                 f.ShowDialog();
+                this.Show();
             }
             else
             {
@@ -34,9 +38,9 @@ namespace CoffeeShop
             }
         }
 
-        private bool Login(string userName, string passWord)
+        private bool Login(string username, string password)
         {
-            return AccountADO.Instane.Login(userName, passWord);
+            return AccountADO.Instane.Login(username, password);
         }
 
         private void btnExit_Click(object sender, EventArgs e)

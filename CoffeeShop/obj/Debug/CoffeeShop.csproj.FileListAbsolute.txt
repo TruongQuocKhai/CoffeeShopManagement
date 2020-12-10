@@ -1,12 +1,13 @@
 D:\Winform C#\CoffeeShop\CoffeeShop\bin\Debug\CoffeeShop.exe.config
 D:\Winform C#\CoffeeShop\CoffeeShop\bin\Debug\CoffeeShop.exe
 D:\Winform C#\CoffeeShop\CoffeeShop\bin\Debug\CoffeeShop.pdb
+D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csprojResolveAssemblyReference.cache
+D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.fAdmin.resources
+D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.fLogin.resources
+D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.fTableManager.resources
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.Properties.Resources.resources
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csproj.GenerateResource.Cache
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csproj.CoreCompileInputs.cache
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.exe
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.pdb
-D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.fAdmin.resources
-D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.fLogin.resources
-D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.fTableManager.resources
-D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csprojResolveAssemblyReference.cache
+D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.fAccountProfile.resources

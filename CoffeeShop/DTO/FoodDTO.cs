@@ -20,7 +20,7 @@ namespace CoffeeShop.DTO
         public FoodDTO(DataRow row)
         {
             this.id = (int)row["id"];
-            this.name = (string)row["name"];
+            this.name = row["name"].ToString();
             this.foodCategoryId = (int)row["food_category_id"];
             this.price = (float)Convert.ToDouble(row["price"].ToString());
         }

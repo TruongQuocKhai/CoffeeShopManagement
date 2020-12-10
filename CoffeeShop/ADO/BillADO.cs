@@ -61,10 +61,7 @@ namespace CoffeeShop.ADO
 
         public DataTable GetListBill(DateTime checkin, DateTime checkout)
         {
-            DataProvider.Instance.ExecuteQuery("exec USP_GetListBill @checkin @checkout ", new object[] { checkin, checkout });
-
+            return DataProvider.Instance.ExecuteQuery("exec USP_GetListBill @checkin , @checkout ", new object[] { checkin, checkout });
         }
-
-
     }
 }

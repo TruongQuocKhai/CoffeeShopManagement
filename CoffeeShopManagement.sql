@@ -306,30 +306,50 @@ end
 
 
 
+-- CREATE PROCEDURE GET LIST BILL
+create proc USP_GetListBill  
+@checkin date, @checkout date
+as
+begin
+	select t.name as [Tên bàn], b.totalPrice as [Tổng bill], b.checkin_date as [Ngày vào], b.checkout_date as [Ngày ra] 
+	from bill as b, table_food as t
+	where checkin_date >= @checkin and checkout_date <= @checkout and b.status = 1 and b.table_id = t.id
+end 
+
+exec USP_GetListBill @checkin = '2020/12/09', @checkout = '2020/12/09' 
+
+
+-- CREATE PROCEDURE UPDATE ACCOUNT
+create proc USP_UpdateAccount
+@username varchar(100), @display_name nvarchar(100), @password varchar(50), @newpassword varchar(100)
+as
+begin
+	declare @isRightPass int = 0
+
+	select @isRightPass = count(*) from account where username = @username and password = @password
+	if(@isRightPass = 1)
+	begin
+		-- truong hop chi doi display name -> chi cap nhat display name 
+	   if(@newpassword = null or @newpassword = '')
+	   begin
+		  update account set display_name = @display_name where username = @username
+	   end
+	   -- nguoc lai user co nhap newpassword -> cap nhat lai ca password 
+	   else
+	    update account set display_name = @display_name, password = @newpassword where username = @username
+	end
+end
+
+
+
+---------------------------
+
 select * from bill
 select * from bill_info
 select * from food
 select * from food_category
 select * from table_food
-
-delete bill_info
-delete bill
-update table_food set status = N'Trống'
-
-alter table bill
-add totalPrice float
-
--- CREATE PROCEDURE GET LIST BILL
-create proc  
-@checkin date, @checkout date
-as
-begin
-	select t.name, b.totalPrice, b.checkin_date, b.checkout_date 
-	from bill as b, table_food as t
-	where checkin_date >= @checkin and checkout_date <= @checkout and b.status = 1 and b.table_id = t.id
-end 
+select * from account
 
 
 
-
-					   

@@ -15,10 +15,17 @@ namespace CoffeeShop
 {
     public partial class fTableManager : Form
     {
-        public fTableManager()
+        private AccountDTO loginAccount;
+        public AccountDTO LoginAccount
+        {
+            get { return loginAccount; }
+            set { loginAccount = value; ChangeAccount(LoginAccount.Type); }
+        }
+        public fTableManager(AccountDTO acc)
         {
             InitializeComponent();
 
+            this.LoginAccount = acc;
             LoadTable();
             LoadCategory();
             LoadComboBoxTable(cbSwitchTable);
@@ -26,6 +33,13 @@ namespace CoffeeShop
 
         // Các event và properties tách ra bằng region
         #region Method
+        // Login account Type
+        void ChangeAccount(int type)
+        {
+            adminToolStripMenuItem.Enabled = type == 1;
+            thôngTinTàiKhoảnToolStripMenuItem.Text += "("+ LoginAccount.DisplayName + ")";
+        }
+
         // Load table
         void LoadTable()
         {
@@ -208,6 +222,29 @@ namespace CoffeeShop
             }
         }
 
+        private void adminToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            fAdmin f = new fAdmin();
+            f.ShowDialog();
+        }
+        private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fAccountProfile f = new fAccountProfile(LoginAccount);
+            f.UpdateAccount += f_UpdateAccount;
+            f.ShowDialog();
+        }
+         // Xu ly event cập nhật lại display name trực tiếp ko cần đăng nhập lại
+        void f_UpdateAccount(object sender, AccountEvent accountEvent)
+        {
+            thôngTinTàiKhoảnToolStripMenuItem.Text = "Thông tin tài khoản (" + accountEvent.Acc.DisplayName +")";
+        }
+
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         #endregion
+
     }
 }

@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="fAccountProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fAccountProfile.Designer.cs">
+      <DependentUpon>fAccountProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="ADO\AccountADO.cs" />
     <Compile Include="ADO\BillADO.cs" />
     <Compile Include="ADO\BillInforADO.cs" />
@@ -53,6 +59,7 @@
     <Compile Include="ADO\FoodADO.cs" />
     <Compile Include="ADO\MenuADO.cs" />
     <Compile Include="ADO\TableADO.cs" />
+    <Compile Include="DTO\AccountDTO.cs" />
     <Compile Include="DTO\BillDTO.cs" />
     <Compile Include="DTO\BillInforDTO.cs" />
     <Compile Include="DTO\CategoryDTO.cs" />
@@ -79,6 +86,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="fAccountProfile.resx">
+      <DependentUpon>fAccountProfile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fAdmin.resx">
       <DependentUpon>fAdmin.cs</DependentUpon>
     </EmbeddedResource>
