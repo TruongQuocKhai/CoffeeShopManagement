@@ -42,5 +42,10 @@ namespace CoffeeShop.ADO
         {
             DataProvider.Instance.ExecuteNonQuery("exec USP_InsertBillInfo @bill_id , @food_id , @count", new object[] { billId, foodId, count });
         }
+
+        public void DeleteBillInfoByFoodId(int id)
+        {
+            DataProvider.Instance.ExecuteQuery("delete bill_info where food_id = " + id);
+        }
     }
 }

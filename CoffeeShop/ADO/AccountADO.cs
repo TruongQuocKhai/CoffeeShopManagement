@@ -50,5 +50,12 @@ namespace CoffeeShop.ADO
             return result > 0; 
             
         }
+
+        // Get List Account
+        public DataTable GetListAccount()
+        {
+            return DataProvider.Instance.ExecuteQuery("select username, display_name, type from account");
+        }
+
     }
 }

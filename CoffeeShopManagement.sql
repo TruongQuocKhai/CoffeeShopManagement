@@ -307,7 +307,7 @@ end
 
 
 -- CREATE PROCEDURE GET LIST BILL
-create proc USP_GetListBill  
+create proc USP_GetListBill		 
 @checkin date, @checkout date
 as
 begin
@@ -340,12 +340,74 @@ begin
 	end
 end
 
+-- CREATE TRIGGER DELETE FOOD  (bill, bill_info)
+create trigger UTG_DeleteFood
+on bill_info for delete
+as
+begin
+   declare @bill_info_id int
+   declare @bill_id int
+   select @bill_info_id = id, @bill_id = deleted.bill_id from deleted
 
+   declare @table_id int
+   select @table_id = table_id from bill where id = @bill_id
 
+   declare @count int = 0
+
+   select @count = count(*) from bill_info as bi, bill as b
+   where b.id = bi.bill_id and b.id = @bill_id and b.status = 0
+
+   if(@count = 0)
+    	update table_food set status = N'Trống' where id = @table_id
+end
+
+--- FUNCTION CONVERT SIGN 
+CREATE FUNCTION FunctionConVertSign(@inputVar NVARCHAR(MAX) )
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN    
+    IF (@inputVar IS NULL OR @inputVar = '')  RETURN ''
+   
+    DECLARE @RT NVARCHAR(MAX)
+    DECLARE @SIGN_CHARS NCHAR(256)
+    DECLARE @UNSIGN_CHARS NCHAR (256)
+ 
+    SET @SIGN_CHARS = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệếìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵýĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ' + NCHAR(272) + NCHAR(208)
+    SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeeeiiiiiooooooooooooooouuuuuuuuuuyyyyyAADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
+ 
+    DECLARE @COUNTER int
+    DECLARE @COUNTER1 int
+   
+    SET @COUNTER = 1
+    WHILE (@COUNTER <= LEN(@inputVar))
+    BEGIN  
+        SET @COUNTER1 = 1
+        WHILE (@COUNTER1 <= LEN(@SIGN_CHARS) + 1)
+        BEGIN
+            IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@inputVar,@COUNTER ,1))
+            BEGIN          
+                IF @COUNTER = 1
+                    SET @inputVar = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@inputVar, @COUNTER+1,LEN(@inputVar)-1)      
+                ELSE
+                    SET @inputVar = SUBSTRING(@inputVar, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@inputVar, @COUNTER+1,LEN(@inputVar)- @COUNTER)
+                BREAK
+            END
+            SET @COUNTER1 = @COUNTER1 +1
+        END
+        SET @COUNTER = @COUNTER +1
+    END
+    -- SET @inputVar = replace(@inputVar,' ','-')
+    RETURN @inputVar
+END
+
+SELECT * FROM food WHERE dbo.FunctionConVertSign(name) LIKE N'%up%'
 ---------------------------
 
+select username, display_name, type from account
+
+
 select * from bill
-select * from bill_info
+select * from bill_info				    
 select * from food
 select * from food_category
 select * from table_food

@@ -38,8 +38,25 @@ namespace CoffeeShop.ADO
                 listCategory.Add(category);
 
             }
-
             return listCategory;
         }
+
+        // Get Category by id
+        public CategoryDTO GetCategoryById(int id)
+        {
+            CategoryDTO category = null;
+            List<CategoryDTO> listCategoryById = new List<CategoryDTO>();
+            string query = "select * from food_category where id = " + id;
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
+
+            foreach (DataRow item in data.Rows)
+            {
+                category = new CategoryDTO(item);
+                return category;
+            }
+            return category;
+        }
+
+
     }
 }
