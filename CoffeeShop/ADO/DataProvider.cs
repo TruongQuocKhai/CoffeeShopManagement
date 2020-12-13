@@ -27,7 +27,7 @@ namespace CoffeeShop.ADO
         }
 
 
-        private string connectionStr = "Data Source=SM102\\SQLEXPRESS;Initial Catalog=CoffeeShopManagement;Integrated Security=True";
+        private string connectionStr = "Data Source=TruongKhai\\SQLEXPRESS;Initial Catalog=CoffeeShopManagement;Integrated Security=True";
         public DataTable ExecuteQuery(string query, object[] parameter = null)
         {
             DataTable data = new DataTable();

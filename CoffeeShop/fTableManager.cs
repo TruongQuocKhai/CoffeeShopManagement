@@ -222,6 +222,7 @@ namespace CoffeeShop
         private void adminToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             fAdmin f = new fAdmin();
+            f.loginAccount = LoginAccount;
             f.InsertFood += f_InsertFood;
             f.DeleteFood += f_DeleteFood;
             f.UpdateFood += f_UpdateFood;

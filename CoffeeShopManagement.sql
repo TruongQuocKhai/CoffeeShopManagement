@@ -304,20 +304,20 @@ begin
 		update table_food set status = N'Trống' where id = @tableId1
 end
 
-
-
 -- CREATE PROCEDURE GET LIST BILL
 create proc USP_GetListBill		 
 @checkin date, @checkout date
 as
 begin
-	select t.name as [Tên bàn], b.totalPrice as [Tổng bill], b.checkin_date as [Ngày vào], b.checkout_date as [Ngày ra] 
+	select t.name as [Tên bàn], b.total_price as [Tổng bill], b.checkin_date as [Ngày vào], b.checkout_date as [Ngày ra] 
 	from bill as b, table_food as t
 	where checkin_date >= @checkin and checkout_date <= @checkout and b.status = 1 and b.table_id = t.id
 end 
 
 exec USP_GetListBill @checkin = '2020/12/09', @checkout = '2020/12/09' 
 
+alter table bill
+add total_price float
 
 -- CREATE PROCEDURE UPDATE ACCOUNT
 create proc USP_UpdateAccount
@@ -401,9 +401,11 @@ BEGIN
 END
 
 SELECT * FROM food WHERE dbo.FunctionConVertSign(name) LIKE N'%up%'
+SELECT * FROM food WHERE dbo.FunctionConVertSign(name) LIKE N'%' + dbo.FunctionConVertSign(N'M') + '%'
 ---------------------------
 
-select username, display_name, type from account
+
+insert into account values ('admin', N'Truong khai', 123, 1);
 
 
 select * from bill

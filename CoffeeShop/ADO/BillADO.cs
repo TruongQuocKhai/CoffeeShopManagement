@@ -54,7 +54,7 @@ namespace CoffeeShop.ADO
 
         public void Checkout(int id, float totalPrice)
         {
-            string query = "UPDATE bill SET checkout_date = GETDATE(), status = 1, "+ "totalPrice = " + totalPrice + "WHERE id = " +id;
+            string query = "UPDATE bill SET checkout_date = GETDATE(), status = 1, "+ "total_price = " + totalPrice + "WHERE id = " +id;
             DataProvider.Instance.ExecuteNonQuery(query);
         }
 

@@ -79,7 +79,7 @@ namespace CoffeeShop.ADO
         public List<FoodDTO> SearchFoodByName(string name)
         {
             List<FoodDTO> listFood = new List<FoodDTO>();
-            string query = string.Format("SELECT * FROM food WHERE dbo.FunctionConVertSign(name) LIKE N'%{0}%'", name);
+            string query = string.Format("SELECT * FROM food WHERE dbo.FunctionConVertSign(name) LIKE N'%' + dbo.FunctionConVertSign(N'{0}') + '%'", name);
             DataTable data = DataProvider.Instance.ExecuteQuery(query);
             foreach (DataRow item in data.Rows)
             {

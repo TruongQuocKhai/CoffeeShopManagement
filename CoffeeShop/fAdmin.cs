@@ -17,6 +17,8 @@ namespace CoffeeShop
         // Using listfood of BindingSource() object when changing data is still biding
         BindingSource listFood = new BindingSource();
         BindingSource listAccount = new BindingSource();
+
+        public AccountDTO loginAccount;
         public fAdmin()
         {
             InitializeComponent();
@@ -85,11 +87,8 @@ namespace CoffeeShop
         {
             txtAccountName.DataBindings.Add(new Binding("Text", dtgvListAccount.DataSource, "username", true, DataSourceUpdateMode.Never));
             txtDisplayName.DataBindings.Add(new Binding("Text", dtgvListAccount.DataSource, "display_name", true, DataSourceUpdateMode.Never));
-            cbAccountType.DataBindings.Add(new Binding("Value", dtgvListAccount.DataSource, "type", true, DataSourceUpdateMode.Never));
+            nmAccountType.DataBindings.Add(new Binding("Value", dtgvListAccount.DataSource, "type", true, DataSourceUpdateMode.Never));
         }
-
-        
-
 
         #endregion
 
@@ -129,10 +128,8 @@ namespace CoffeeShop
             }
             catch (Exception)
             {
-
                 throw;
             }
-            
         }
         private void btnAddFood_Click(object sender, EventArgs e)
         {
@@ -218,10 +215,77 @@ namespace CoffeeShop
         {
             listFood.DataSource =  SearchFoodByName(txtSearchFood.Text);
         }
-
         private void btnShowAcc_Click(object sender, EventArgs e)
         {
             LoadListAccount();
+        }
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+            string username = txtAccountName.Text;
+            string displayName = txtDisplayName.Text;
+            int type = Convert.ToInt32(nmAccountType.Text);
+
+            if (AccountADO.Instane.InsertAccount(username, displayName, type))
+            {
+                MessageBox.Show("Thêm mới tài khoản thành công!");
+                LoadListAccount();
+            }
+            else
+            {
+                MessageBox.Show("Thêm mới tài khoản thất bại!");
+            }
+        }
+        
+        // update Account inside admin
+        private void btnUpdateAccount_Click(object sender, EventArgs e)
+        {
+            string username = txtAccountName.Text;
+            string displayName = txtDisplayName.Text;
+            int type = (int)nmAccountType.Value;
+
+            if (AccountADO.Instane.UpdateAccountInsideAdmin(username, displayName, type))
+            {
+                MessageBox.Show("Cập nhật tài khoản thành công!");
+                LoadListAccount();
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật tài khoản thất bại!");
+            }
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            
+            string username = txtAccountName.Text;
+            if (loginAccount.Username.Equals(username))
+            {
+                MessageBox.Show("Bạn không thể xóa tài khoản hiện tại của bạn!");
+                return;
+            }
+            if (AccountADO.Instane.DeleteAccount(username))
+            {
+                MessageBox.Show("Xóa tài khoản thành công!");
+                LoadListAccount();
+            }
+            else
+            {
+                MessageBox.Show("Xóa tài khoản thất bại!");
+            }
+        }
+
+        // reset password = 0
+        private void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            string username = txtAccountName.Text;
+            if (AccountADO.Instane.ResetPassword(username))
+            {
+                MessageBox.Show("Reset password thành công!");
+            }
+            else
+            {
+                MessageBox.Show("Reset password thất bại!");
+            }
         }
     }
 

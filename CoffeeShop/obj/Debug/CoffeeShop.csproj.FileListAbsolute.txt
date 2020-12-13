@@ -11,3 +11,16 @@ D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csproj.CoreCompileInput
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.exe
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.pdb
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csprojResolveAssemblyReference.cache
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\bin\Debug\CoffeeShop.exe.config
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\bin\Debug\CoffeeShop.exe
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\bin\Debug\CoffeeShop.pdb
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.csprojAssemblyReference.cache
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.fAccountProfile.resources
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.fAdmin.resources
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.fLogin.resources
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.fTableManager.resources
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.Properties.Resources.resources
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.csproj.GenerateResource.cache
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.csproj.CoreCompileInputs.cache
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.exe
+D:\Learn Programming\C Sharp\CoffeeShopManagement\CoffeeShop\obj\Debug\CoffeeShop.pdb
