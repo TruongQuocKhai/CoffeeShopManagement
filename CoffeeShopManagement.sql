@@ -404,9 +404,17 @@ SELECT * FROM food WHERE dbo.FunctionConVertSign(name) LIKE N'%up%'
 SELECT * FROM food WHERE dbo.FunctionConVertSign(name) LIKE N'%' + dbo.FunctionConVertSign(N'M') + '%'
 ---------------------------
 
+-- CREATE PROCEDURE GET LIST BILL BY DATE FOR REPORT
+create proc USP_GetListBillByDateForReport
+@checkin date, @checkout date
+as
+begin
+	select t.name, b.totalPrice, b.checkin_date, b.checkout_date
+	from bill as b, table_food as t
+	where checkin_date >= @checkin and checkout_date <= @checkout and b.status = 1 and b.table_id = t.id
+end
 
-insert into account values ('admin', N'Truong khai', 123, 1);
-
+---------------------------
 
 select * from bill
 select * from bill_info				    
@@ -414,6 +422,30 @@ select * from food
 select * from food_category
 select * from table_food
 select * from account
+
+
+-- TRIGGER: sẽ thay đổi mỗi khi có thao tác thay đổi thông tin trong bảng
+-- inserted: chứa những trường đã insert | update vảo bảng
+-- deleted: chứa những trường đã bị xóa khỏi bảng.
+
+-- VD viết trigger không cho phep xóa thông tin các nhân viên lớn hơn 40 tuổi.
+create trigger UTG_AbortOlderThan40
+on account for delete
+as
+begin
+   declare @count int = 0; -- biến count đếm số lượng những người có số tuổi lớn hơn 40
+
+   select @count = count(*) from deleted
+   where year(GETDATE()) - YEAR(deleted.birth_date) > 40
+    
+
+   if(@count > 0)  -- nếu count > 0 sẽ huy bỏ phiên giao dịch
+   begin 
+	print N'Không được xóa người lớn hơn 40 tuổi'
+		rollback tran	 -- hoàn tác câu lệnh delete
+
+   end
+end 
 
 
 

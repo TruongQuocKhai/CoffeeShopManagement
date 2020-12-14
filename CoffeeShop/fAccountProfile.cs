@@ -23,7 +23,6 @@ namespace CoffeeShop
         public fAccountProfile(AccountDTO acc)
         {
             InitializeComponent();
-
             LoginAccount = acc;
         }
 
@@ -94,7 +93,6 @@ namespace CoffeeShop
             get { return acc; }
             set { acc = value; }
         }
-
         public AccountEvent(AccountDTO acc)
         {
             this.Acc = acc;

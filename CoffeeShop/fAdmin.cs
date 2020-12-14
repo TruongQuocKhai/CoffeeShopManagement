@@ -16,6 +16,7 @@ namespace CoffeeShop
     {
         // Using listfood of BindingSource() object when changing data is still biding
         BindingSource listFood = new BindingSource();
+        BindingSource listFoodCategory = new BindingSource();
         BindingSource listAccount = new BindingSource();
 
         public AccountDTO loginAccount;
@@ -32,6 +33,14 @@ namespace CoffeeShop
             dtgvListAccount.DataSource = listAccount;
             LoadListAccount();
             AccountBinding();
+
+            dtgvFoodCategory.DataSource = listFoodCategory;
+            LoadFoodCategory();
+            FoodCategoryBinding();
+
+
+
+
         }
 
         #region methods
@@ -55,7 +64,7 @@ namespace CoffeeShop
         }
 
         // Binding food infor 
-       void FoodBiding()
+        void FoodBiding()
         {
             txtId.DataBindings.Add(new Binding("Text", dtgvListFood.DataSource, "Id", true, DataSourceUpdateMode.Never));
             txtFoodName.DataBindings.Add(new Binding("Text", dtgvListFood.DataSource, "Name", true, DataSourceUpdateMode.Never));
@@ -73,7 +82,7 @@ namespace CoffeeShop
         List<FoodDTO> SearchFoodByName(string name)
         {
             List<FoodDTO> listFood = FoodADO.Instance.SearchFoodByName(name);
-            return listFood;                                                  
+            return listFood;
         }
 
         // Load the list of account out of datagidview
@@ -88,6 +97,18 @@ namespace CoffeeShop
             txtAccountName.DataBindings.Add(new Binding("Text", dtgvListAccount.DataSource, "username", true, DataSourceUpdateMode.Never));
             txtDisplayName.DataBindings.Add(new Binding("Text", dtgvListAccount.DataSource, "display_name", true, DataSourceUpdateMode.Never));
             nmAccountType.DataBindings.Add(new Binding("Value", dtgvListAccount.DataSource, "type", true, DataSourceUpdateMode.Never));
+        }
+
+        void LoadFoodCategory()
+        {
+            listFoodCategory.DataSource = CategoryADO.Instance.GetListCategory();
+        }
+
+        // Binding Food Category
+        void FoodCategoryBinding()
+        {
+            txtCategoryId.DataBindings.Add(new Binding("Text", dtgvFoodCategory.DataSource, "id", true, DataSourceUpdateMode.Never));
+            txtCategoryName.DataBindings.Add(new Binding("Text", dtgvFoodCategory.DataSource, "name", true, DataSourceUpdateMode.Never));
         }
 
         #endregion
@@ -213,7 +234,7 @@ namespace CoffeeShop
         // Event click Dishes Search 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            listFood.DataSource =  SearchFoodByName(txtSearchFood.Text);
+            listFood.DataSource = SearchFoodByName(txtSearchFood.Text);
         }
         private void btnShowAcc_Click(object sender, EventArgs e)
         {
@@ -235,7 +256,7 @@ namespace CoffeeShop
                 MessageBox.Show("Thêm mới tài khoản thất bại!");
             }
         }
-        
+
         // update Account inside admin
         private void btnUpdateAccount_Click(object sender, EventArgs e)
         {
@@ -245,18 +266,18 @@ namespace CoffeeShop
 
             if (AccountADO.Instane.UpdateAccountInsideAdmin(username, displayName, type))
             {
-                MessageBox.Show("Cập nhật tài khoản thành công!");
+                MessageBox.Show("Cập nhật tài khoản thành công!");
                 LoadListAccount();
             }
             else
             {
-                MessageBox.Show("Cập nhật tài khoản thất bại!");
+                MessageBox.Show("Cập nhật tài khoản thất bại!");
             }
         }
 
         private void btnDeleteAccount_Click(object sender, EventArgs e)
         {
-            
+
             string username = txtAccountName.Text;
             if (loginAccount.Username.Equals(username))
             {
@@ -284,8 +305,62 @@ namespace CoffeeShop
             }
             else
             {
-                MessageBox.Show("Reset password thất bại!");
+                MessageBox.Show("Reset password thất bại!");
             }
+        }
+
+        private void btnShowCategory_Click(object sender, EventArgs e)
+        {
+            LoadFoodCategory();
+        }
+
+        private void btnDeleteCategory_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txtCategoryId.Text);
+            if (CategoryADO.Instance.DeleteCategory(id))
+            {
+                MessageBox.Show("Xóa danh mục thành công!");
+                LoadFoodCategory();
+            }
+            else
+            {
+                MessageBox.Show("Xóa danh mục thất bại!");
+            }
+        }
+        private void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            string name = txtCategoryName.Text;
+            if (CategoryADO.Instance.InsertCategory(name))
+            {
+                MessageBox.Show("Thêm mới tài khoản thành công!");
+                LoadFoodCategory();
+            }
+            else
+            {
+                MessageBox.Show("Thêm mới tài khoản thất bại!");
+            }
+        }
+
+        private void btnUpdateCategory_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txtCategoryId.Text);
+            string name = txtCategoryName.Text;
+            if (CategoryADO.Instance.UpdateCategory(id, name))
+            {
+                MessageBox.Show("Cập nhật tài khoản thành công!");
+                LoadFoodCategory();
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật tài khoản thất bại!");
+            }
+            
+        }
+
+        private void fAdmin_Load(object sender, EventArgs e)
+        {
+            this.USP_GetListBillByDateForReportTableAdapter.Fill(this.DsRevenueReport.USP_GetListBillByDateForReport, dtpkFromdate.Value, dtpkTodate.Value);
+            this.reportViewer1.RefreshReport();
         }
     }
 

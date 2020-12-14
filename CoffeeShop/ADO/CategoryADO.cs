@@ -29,14 +29,11 @@ namespace CoffeeShop.ADO
         {
             List<CategoryDTO> listCategory = new List<CategoryDTO>();
             string query = "SELECT * FROM food_category";
-
             DataTable data = DataProvider.Instance.ExecuteQuery(query);
-
             foreach (DataRow item in data.Rows)
             {
                 CategoryDTO category = new CategoryDTO(item);
                 listCategory.Add(category);
-
             }
             return listCategory;
         }
@@ -57,6 +54,28 @@ namespace CoffeeShop.ADO
             return category;
         }
 
+        // Insert Category
+        public bool InsertCategory(string name)
+        {
+            string query = string.Format("insert into food_category values (N'{0}')", name);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
 
+        // Delete category 
+        public bool DeleteCategory(int id)
+        {
+            string query = string.Format("delete food_category where id = {0}", id);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
+        // Update category
+        public bool UpdateCategory(int id, string name)
+        {
+            string query = string.Format("update food_category set name = N'{0}' where id = {1}", name, id);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
     }
 }
