@@ -32,6 +32,13 @@ namespace CoffeeShop.ADO
             return result.Rows.Count > 0;
         }
 
+        public bool CheckPassword(string password)
+        {
+            string query = string.Format("select password from account where password = '{0}'", password);
+            DataTable result = DataProvider.Instance.ExecuteQuery(query);
+            return result.Rows.Count > 0;
+        }
+
         public AccountDTO GetAccountByUsername(string username)
         {
             DataTable data = DataProvider.Instance.ExecuteQuery("select * from account where username = '"+username+"'");
@@ -46,7 +53,7 @@ namespace CoffeeShop.ADO
         // External account updates
         public bool UpdateAccount(string username, string displayName, string password, string newPassword)
         {
-            string query = "exec USP_UpdateAccount @username , @display_name , @password , @newpassword";
+            string query = "USP_UpdateAccount @username , @display_name , @password , @newpassword";
             int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { username, displayName, password, newPassword });
             return result > 0; 
         }

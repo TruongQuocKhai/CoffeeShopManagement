@@ -64,19 +64,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoffeeShopManagementDataSet.cs">
-      <DependentUpon>CoffeeShopManagementDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="CoffeeShopManagementDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CoffeeShopManagementDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="DsRevenueReport.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsRevenueReport.xsd</DependentUpon>
-    </Compile>
     <Compile Include="fAccountProfile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,28 +128,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="RevenueReport.rdlc" />
-    <None Include="CoffeeShopManagementDataSet.xsc">
-      <DependentUpon>CoffeeShopManagementDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="CoffeeShopManagementDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>CoffeeShopManagementDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="CoffeeShopManagementDataSet.xss">
-      <DependentUpon>CoffeeShopManagementDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DsRevenueReport.xsc">
-      <DependentUpon>DsRevenueReport.xsd</DependentUpon>
-    </None>
-    <None Include="DsRevenueReport.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsRevenueReport.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="DsRevenueReport.xss">
-      <DependentUpon>DsRevenueReport.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

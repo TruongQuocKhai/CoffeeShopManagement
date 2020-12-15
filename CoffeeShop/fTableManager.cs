@@ -15,6 +15,7 @@ namespace CoffeeShop
 {
     public partial class fTableManager : Form
     {
+        // 
         private AccountDTO loginAccount;
         public AccountDTO LoginAccount
         {
@@ -30,14 +31,14 @@ namespace CoffeeShop
             LoadCategory();
             LoadComboBoxTable(cbSwitchTable);
         }
-
-        // Các event và properties tách ra bằng region
+        
         #region Method
         // Login account Type
         void ChangeAccount(int type)
         {
+            // Login với Type = 1 là Admin, cho phép thao tác vào Tab Admin, Type = 0 là staff -> tab Admin disable 
             adminToolStripMenuItem.Enabled = type == 1;
-            thôngTinTàiKhoảnToolStripMenuItem.Text += "(" + LoginAccount.DisplayName + ")";
+            thôngTinTàiKhoảnToolStripMenuItem.Text += " (" + LoginAccount.DisplayName + ") ";
         }
 
         // Load table
@@ -68,7 +69,7 @@ namespace CoffeeShop
             }
         }
 
-        // Load Food Category
+        // Load all Category table data
         void LoadCategory()
         {
             List<CategoryDTO> listCategory = CategoryADO.Instance.GetListCategory();
@@ -76,7 +77,7 @@ namespace CoffeeShop
             cbCategory.DisplayMember = "name";
         }
 
-        // load danh sach cac mon an theo id danh muc 
+        // Load the list of food by category id
         void LoadFoodListByCategoryId(int id)
         {
             List<FoodDTO> listFood = FoodADO.Instance.GetFoodListByCategoryId(id);
@@ -84,6 +85,7 @@ namespace CoffeeShop
             cbFood.DisplayMember = "name";
         }
 
+        // Display order list
         void ShowBill(int id)
         {
             lsvBill.Items.Clear();
@@ -105,6 +107,7 @@ namespace CoffeeShop
             txbTotalPrice.Text = string.Format("{0:#,##0}", totalPrice);
         }
 
+        // Load Table data out of ComboBox
         void LoadComboBoxTable(ComboBox cb)
         {
             cb.DataSource = TableADO.Instance.LoadTableList();
@@ -114,42 +117,34 @@ namespace CoffeeShop
         #endregion
 
         #region Events
+        // Event click on Table
         private void Btn_Click(object sender, EventArgs e)
         {
-            int tableId = ((sender as Button).Tag as TableDTO).Id; // lay ra id trong Object TableDTO
+            int tableId = ((sender as Button).Tag as TableDTO).Id; // Get id TableDTO
             lsvBill.Tag = (sender as Button).Tag;
             ShowBill(tableId);
-        }
-
-        private void adminToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            fAdmin f = new fAdmin();
-            f.ShowDialog();
         }
 
         // combo box Category
         private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             int id = 0;
-
             ComboBox cb = sender as ComboBox;
             if (cb.SelectedItem == null)
                 return;
             CategoryDTO selected = cb.SelectedItem as CategoryDTO;
             id = selected.Id;
-
             // Load danh sach mon an theo category
             LoadFoodListByCategoryId(id);
         }
-
-
-        // Add food
+        // Order
         private void btnAddFood_Click(object sender, EventArgs e)
         {
             TableDTO table = lsvBill.Tag as TableDTO; // Lấy dữ liệu của bảng table_food qua listBill 
             if (table == null)
             {
-                MessageBox.Show("Hãy chọn bàn!");
+                MessageBox.Show("Hãy chọn bàn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             int billId = BillADO.Instance.GetUncheckBillIdByTableId(table.Id); // Lay thong tin bill du vao id table
             int foodId = (cbFood.SelectedItem as FoodDTO).Id;
@@ -167,21 +162,20 @@ namespace CoffeeShop
             LoadTable();  // update Status again
         }
 
-        // Bill payment button
-        // Change the Status of the Table
-        // 
+        // Check out and status change
         private void btnCheckout_Click(object sender, EventArgs e)
         {
-            //try
-            //{
             // Get the current table
             TableDTO table = lsvBill.Tag as TableDTO;
+            if (lsvBill.Tag == null)
+            {
+                MessageBox.Show("Vui lòng chọn bàn cần thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             // Get bill by talbe_id
             int billId = BillADO.Instance.GetUncheckBillIdByTableId(table.Id);
 
-
             double totalPrice = Convert.ToDouble(txbTotalPrice.Text);
-
 
             if (billId != -1) // bill already exist, the table have someone
             {
@@ -192,43 +186,61 @@ namespace CoffeeShop
                     LoadTable(); // update Status again
                 }
             }
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("Vui lòng chọn bàn cần thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
         }
 
+        // Switch Table
         private void btnSwitchTable_Click(object sender, EventArgs e)
         {
-            try
+            if (lsvBill.Tag == null)
             {
-                int id1 = (lsvBill.Tag as TableDTO).Id; // Getid of current table
-                int id2 = (cbSwitchTable.SelectedItem as TableDTO).Id;
-
-                if (MessageBox.Show(string.Format("Bạn muốn chuyển {0} qua {1}?", (lsvBill.Tag as TableDTO).Name,
-                    (cbSwitchTable.SelectedItem as TableDTO).Name), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
-                {
-                    TableADO.Instance.SwitchTable(id1, id2);
-                    LoadTable();
-                }
+                MessageBox.Show("Vui lòng chọn bàn muốn chuyển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            catch (Exception)
+            int id1 = (lsvBill.Tag as TableDTO).Id; // Getid of current table
+            int id2 = (cbSwitchTable.SelectedItem as TableDTO).Id;
+
+            if (MessageBox.Show(string.Format("Bạn muốn chuyển {0} qua {1}?", (lsvBill.Tag as TableDTO).Name,
+                (cbSwitchTable.SelectedItem as TableDTO).Name), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
             {
-                MessageBox.Show("Vui lòng chọn bàn muốn chuyển!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TableADO.Instance.SwitchTable(id1, id2);
+                LoadTable();
             }
         }
 
+        // Call the Admin form
         private void adminToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             fAdmin f = new fAdmin();
             f.loginAccount = LoginAccount;
+            // bắt sự kiện từ form con Admin
             f.InsertFood += f_InsertFood;
             f.DeleteFood += f_DeleteFood;
             f.UpdateFood += f_UpdateFood;
+
+            f.InsertTable += f_InsertTable;
+            f.DeleteTable += f_DeleteTable;
+            f.UpdateTable += f_UpdateTable;
+
             f.ShowDialog();
         }
 
+        // Bắt sự kiện Insert, Delete, Updaet Table từ form con Admin
+        private void f_UpdateTable(object sender, EventArgs e)
+        {
+            LoadTable();
+        }
+
+        private void f_DeleteTable(object sender, EventArgs e)
+        {
+            LoadTable();
+        }
+
+        private void f_InsertTable(object sender, EventArgs e)
+        {
+            LoadTable();
+        }
+
+        // Bắt sự kiện Insert, Delete, Updaet Food từ form con Admin
         private void f_UpdateFood(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
@@ -263,7 +275,7 @@ namespace CoffeeShop
             f.UpdateAccount += f_UpdateAccount;
             f.ShowDialog();
         }
-        // Xu ly event cập nhật lại display name trực tiếp ko cần đăng nhập lại
+        // Bắt sự kiện cập nhật lại display name trực tiếp ko cần đăng nhập lại
         void f_UpdateAccount(object sender, AccountEvent accountEvent)
         {
             thôngTinTàiKhoảnToolStripMenuItem.Text = "Thông tin tài khoản (" + accountEvent.Acc.DisplayName + ")";

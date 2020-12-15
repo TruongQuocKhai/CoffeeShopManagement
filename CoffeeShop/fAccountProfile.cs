@@ -55,10 +55,15 @@ namespace CoffeeShop
                         updateAccount(this, new AccountEvent(AccountADO.Instane.GetAccountByUsername(username)));
                     }
                 }
-                else
+                else if(password == "")
                 {
-                    MessageBox.Show("Vui lòng nhập đúng mật khẩu");
+                    MessageBox.Show("Vui lòng nhập mật khẩu để đổi tên hiển thị!");
                 }
+                else if (!password.Equals(AccountADO.Instane.CheckPassword(password)))
+                {
+                    MessageBox.Show("Mật khẩu sai, vui lòng thử lại!");
+                }
+                
             }
         }
         #endregion
@@ -85,7 +90,7 @@ namespace CoffeeShop
     }
 
     // Class Event
-    public class AccountEvent:EventArgs
+    public class AccountEvent : EventArgs
     {
         private AccountDTO acc;
         public AccountDTO Acc

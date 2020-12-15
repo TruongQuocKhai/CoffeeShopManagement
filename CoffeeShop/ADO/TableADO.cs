@@ -29,12 +29,14 @@ namespace CoffeeShop.ADO
             }
             private set { instance = value; }
         }
+
+        // Load List table
         public List<TableDTO>LoadTableList()
         {
             List<TableDTO> tableList = new List<TableDTO>();
-            // data chua du lieu bang table_food
+            // data table_food
             DataTable data = DataProvider.Instance.ExecuteQuery("USP_GetTableList");
-            // Lay ra cac row trong bang table_food
+            // Loop through the rows in the table_food
             foreach (DataRow item in data.Rows)
             {
                 TableDTO table = new TableDTO(item);
@@ -43,9 +45,35 @@ namespace CoffeeShop.ADO
             return tableList;
         }
 
+        // Use procedure for switch tables
         public void SwitchTable(int id1, int id2)
         {
             DataProvider.Instance.ExecuteQuery("USP_SwitchTable @tableId1 , @tableId2 ", new object[] { id1, id2 });
         }
+
+        // Inset Table 
+        public bool InsertFoodTabel(string name)
+        {
+            string query = string.Format("insert into table_food(name) values (N'{0}')", name);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
+        // Update Table
+        public bool UpdateFoodTable(int id, string name)
+        {
+            string query = string.Format("update table_food set name = N'{0}' where id = {1}", name, id);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
+        // Delete Table
+        public bool DeleteFoodTable(int id)
+        {
+            string query = string.Format("delete table_food where id = {0}", id);
+            int result = DataProvider.Instance.ExecuteNonQuery(query);
+            return result > 0;
+        }
+
     }
 }

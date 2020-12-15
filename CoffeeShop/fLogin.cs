@@ -34,7 +34,7 @@ namespace CoffeeShop
             }
             else
             {
-                MessageBox.Show("Username hoac password sai!");
+                MessageBox.Show("Username hoặc password sai!");
             }
         }
 

@@ -94,7 +94,7 @@ select * from account
 where username = 'Admin' and password = '1'
 
 
-
+-- CREATE PROCEDURE LOGIN 
 create proc USP_Login
 @username varchar(100), @password varchar(100)
 as
@@ -422,6 +422,11 @@ select * from food
 select * from food_category
 select * from table_food
 select * from account
+
+select password from account where password = 1
+
+
+
 
 
 -- TRIGGER: sẽ thay đổi mỗi khi có thao tác thay đổi thông tin trong bảng

@@ -91,6 +91,7 @@
             // 
             this.txbUserName.Location = new System.Drawing.Point(155, 29);
             this.txbUserName.Name = "txbUserName";
+            this.txbUserName.ReadOnly = true;
             this.txbUserName.Size = new System.Drawing.Size(152, 19);
             this.txbUserName.TabIndex = 5;
             // 

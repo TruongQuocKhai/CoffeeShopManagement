@@ -17,30 +17,34 @@ namespace CoffeeShop
         // Using listfood of BindingSource() object when changing data is still biding
         BindingSource listFood = new BindingSource();
         BindingSource listFoodCategory = new BindingSource();
+        BindingSource listFoodTable = new BindingSource();
         BindingSource listAccount = new BindingSource();
 
         public AccountDTO loginAccount;
         public fAdmin()
         {
             InitializeComponent();
+            // Category Combox 
             LoadCategoryIntoComboBox(cbFoodCategory);
+            // Revenue
             LoadDateTimePickerBill();
             LoadListViewByDate(dtpkFromdate.Value, dtpkTodate.Value);
+            // Food
             dtgvListFood.DataSource = listFood;
             LoadListFood();
             FoodBiding();
-
+            // Account
             dtgvListAccount.DataSource = listAccount;
             LoadListAccount();
             AccountBinding();
-
+            // Food Category
             dtgvFoodCategory.DataSource = listFoodCategory;
             LoadFoodCategory();
             FoodCategoryBinding();
-
-
-
-
+            // Food Table
+            dtgvFoodTable.DataSource = listFoodTable;
+            LoadListFoodTable();
+            FoodTableBinding();
         }
 
         #region methods
@@ -107,20 +111,74 @@ namespace CoffeeShop
         // Binding Food Category
         void FoodCategoryBinding()
         {
-            txtCategoryId.DataBindings.Add(new Binding("Text", dtgvFoodCategory.DataSource, "id", true, DataSourceUpdateMode.Never));
+            txtCategoryId.DataBindings.Add(new Binding("Text", dtgvFoodCategory.DataSource, "id", true, DataSourceUpdateMode.Never)); //true, DataSourceUpdateMode.Never: sua cac truong ben ngoai ko anh huong den datagidview
             txtCategoryName.DataBindings.Add(new Binding("Text", dtgvFoodCategory.DataSource, "name", true, DataSourceUpdateMode.Never));
+        }
+
+        // Load list Food Table
+        void LoadListFoodTable()
+        {
+            listFoodTable.DataSource = TableADO.Instance.LoadTableList();
+        }
+        // Binding foodtable 
+        void FoodTableBinding()
+        {
+            txtTableName.DataBindings.Add(new Binding("Text", dtgvFoodTable.DataSource, "Name", true, DataSourceUpdateMode.Never));
+            txtTableId.DataBindings.Add(new Binding("Text", dtgvFoodTable.DataSource, "Id", true, DataSourceUpdateMode.Never));
         }
 
         #endregion
 
         #region events
+
+        // Create event Insert, Delete, Update Food
+        private event EventHandler insertFood;
+        public event EventHandler InsertFood
+        {
+            add { insertFood += value; }
+            remove { insertFood -= value; }
+        }
+
+        private event EventHandler updateFood;
+        public event EventHandler UpdateFood
+        {
+            add { updateFood += value; }
+            remove { updateFood -= value; }
+        }
+
+        private event EventHandler deleteFood;
+        public event EventHandler DeleteFood
+        {
+            add { deleteFood += value; }
+            remove { deleteFood -= value; }
+        }
+
+        // Create event Insert, Delete, Update Table
+        private event EventHandler insertTable;
+        public event EventHandler InsertTable
+        {
+            add { insertTable += value; }
+            remove { insertTable -= value; }
+        }
+
+        private event EventHandler deleteTable;
+        public event EventHandler DeleteTable
+        {
+            add { deleteTable += value; }
+            remove { deleteTable -= value; }
+        }
+
+        private event EventHandler updateTable;
+        public event EventHandler UpdateTable
+        {
+            add { updateTable += value; }
+            remove { updateTable -= value; }
+        }
+
+        // TAB PAGE FOOD
         private void btnViewBill_Click(object sender, EventArgs e)
         {
             LoadListViewByDate(dtpkFromdate.Value, dtpkTodate.Value);
-        }
-        private void btnShowFood_Click(object sender, EventArgs e)
-        {
-            LoadListFood();
         }
         // binding category by id of food
         private void txtId_TextChanged(object sender, EventArgs e)
@@ -209,37 +267,14 @@ namespace CoffeeShop
                 MessageBox.Show("Xóa không thành công!");
             }
         }
-
-        // create event insert food
-        private event EventHandler insertFood;
-        public event EventHandler InsertFood
-        {
-            add { insertFood += value; }
-            remove { insertFood -= value; }
-        }
-        // create event update food
-        private event EventHandler updateFood;
-        public event EventHandler UpdateFood
-        {
-            add { updateFood += value; }
-            remove { updateFood -= value; }
-        }
-        // create event delete food
-        private event EventHandler deleteFood;
-        public event EventHandler DeleteFood
-        {
-            add { deleteFood += value; }
-            remove { deleteFood -= value; }
-        }
         // Event click Dishes Search 
         private void btnSearch_Click(object sender, EventArgs e)
         {
             listFood.DataSource = SearchFoodByName(txtSearchFood.Text);
         }
-        private void btnShowAcc_Click(object sender, EventArgs e)
-        {
-            LoadListAccount();
-        }
+
+        // TAB PAGE ACCOUNT
+        // event click Add, Delete, Update Account inside admin
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
             string username = txtAccountName.Text;
@@ -256,8 +291,6 @@ namespace CoffeeShop
                 MessageBox.Show("Thêm mới tài khoản thất bại!");
             }
         }
-
-        // update Account inside admin
         private void btnUpdateAccount_Click(object sender, EventArgs e)
         {
             string username = txtAccountName.Text;
@@ -274,7 +307,6 @@ namespace CoffeeShop
                 MessageBox.Show("Cập nhật tài khoản thất bại!");
             }
         }
-
         private void btnDeleteAccount_Click(object sender, EventArgs e)
         {
 
@@ -294,7 +326,6 @@ namespace CoffeeShop
                 MessageBox.Show("Xóa tài khoản thất bại!");
             }
         }
-
         // reset password = 0
         private void btnResetPassword_Click(object sender, EventArgs e)
         {
@@ -309,11 +340,8 @@ namespace CoffeeShop
             }
         }
 
-        private void btnShowCategory_Click(object sender, EventArgs e)
-        {
-            LoadFoodCategory();
-        }
-
+        // TAB PAGE CATEGORY
+        // event click Add, Delete, Update Category
         private void btnDeleteCategory_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(txtCategoryId.Text);
@@ -340,7 +368,6 @@ namespace CoffeeShop
                 MessageBox.Show("Thêm mới tài khoản thất bại!");
             }
         }
-
         private void btnUpdateCategory_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(txtCategoryId.Text);
@@ -354,12 +381,72 @@ namespace CoffeeShop
             {
                 MessageBox.Show("Cập nhật tài khoản thất bại!");
             }
-            
+
         }
 
+        // TAB PAGE TABLE
+        // event click Add, Delete, Update FoodTable
+        private void btnAddTable_Click(object sender, EventArgs e)
+        {
+            string name = txtTableName.Text;
+
+            if (TableADO.Instance.InsertFoodTabel(name))
+            {
+                MessageBox.Show("Thêm bàn thành công!");
+                LoadListFoodTable();
+                if (insertTable != null)
+                {
+                    insertTable(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Thêm bàn thất bại!");
+            }
+        }
+        private void btnUpdateTable_Click(object sender, EventArgs e)
+        {
+            string name = txtTableName.Text;
+            int id = Convert.ToInt32(txtTableId.Text);
+            if (TableADO.Instance.UpdateFoodTable(id, name))
+            {
+                MessageBox.Show("Cập nhật bàn thành công!");
+                LoadListFoodTable();
+                if (updateTable != null)
+                {
+                    updateTable(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật bàn thất bại!");
+            }
+        }
+        private void btnDeleteTable_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txtTableId.Text);
+            if (TableADO.Instance.DeleteFoodTable(id))
+            {
+                MessageBox.Show("Xóa bàn thành công!");
+                LoadListFoodTable();
+                if (deleteTable != null)
+                {
+                    deleteTable(this, new EventArgs());
+                }
+            }
+            else
+            {
+                {
+                    MessageBox.Show("Xóa bàn thất bại!");
+                }
+            }
+
+        }
+
+        // TAB PAGE REPORT 
         private void fAdmin_Load(object sender, EventArgs e)
         {
-            this.USP_GetListBillByDateForReportTableAdapter.Fill(this.DsRevenueReport.USP_GetListBillByDateForReport, dtpkFromdate.Value, dtpkTodate.Value);
+            this.USP_GetListBillByDateForReportTableAdapter.Fill(this.CoffeeShopManagementDataSet.USP_GetListBillByDateForReport, dtpkFromdate.Value, dtpkTodate.Value);
             this.reportViewer1.RefreshReport();
         }
     }
