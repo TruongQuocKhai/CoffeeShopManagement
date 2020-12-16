@@ -64,6 +64,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DsRevenueReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsRevenueReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="fAccountProfile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +133,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="RevenueReport.rdlc" />
+    <None Include="DsRevenueReport.xsc">
+      <DependentUpon>DsRevenueReport.xsd</DependentUpon>
+    </None>
+    <None Include="DsRevenueReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsRevenueReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DsRevenueReport.xss">
+      <DependentUpon>DsRevenueReport.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

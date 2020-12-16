@@ -217,6 +217,10 @@ namespace CoffeeShop
             f.DeleteFood += f_DeleteFood;
             f.UpdateFood += f_UpdateFood;
 
+            f.InsertCategory += F_InsertCategory;
+            f.DeleteCategory += F_DeleteCategory;
+            f.UpdateCategory += F_UpdateCategory;
+
             f.InsertTable += f_InsertTable;
             f.DeleteTable += f_DeleteTable;
             f.UpdateTable += f_UpdateTable;
@@ -224,17 +228,48 @@ namespace CoffeeShop
             f.ShowDialog();
         }
 
+        // Bắt sự kiện Insert, Delete, Updaet Category
+        private void F_UpdateCategory(object sender, EventArgs e)
+        {
+            LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as TableDTO).Id);
+            }
+            LoadTable();
+            LoadCategory();
+
+        }
+        private void F_DeleteCategory(object sender, EventArgs e)
+        {
+            LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as TableDTO).Id);
+            }
+            LoadTable();
+            LoadCategory();
+        }
+        private void F_InsertCategory(object sender, EventArgs e)
+        {
+            LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
+            if (lsvBill.Tag != null)
+            {
+                ShowBill((lsvBill.Tag as TableDTO).Id);
+            }
+            LoadTable();
+            LoadCategory();
+        }
+
         // Bắt sự kiện Insert, Delete, Updaet Table từ form con Admin
         private void f_UpdateTable(object sender, EventArgs e)
         {
             LoadTable();
         }
-
         private void f_DeleteTable(object sender, EventArgs e)
         {
             LoadTable();
         }
-
         private void f_InsertTable(object sender, EventArgs e)
         {
             LoadTable();
@@ -249,7 +284,6 @@ namespace CoffeeShop
                 ShowBill((lsvBill.Tag as TableDTO).Id);
             }
         }
-
         private void f_DeleteFood(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
@@ -259,7 +293,6 @@ namespace CoffeeShop
             }
             LoadTable();
         }
-
         private void f_InsertFood(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);

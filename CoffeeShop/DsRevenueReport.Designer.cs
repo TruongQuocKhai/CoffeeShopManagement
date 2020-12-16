@@ -281,7 +281,7 @@ namespace CoffeeShop {
             
             private global::System.Data.DataColumn columnname;
             
-            private global::System.Data.DataColumn columntotal_price;
+            private global::System.Data.DataColumn columntotalPrice;
             
             private global::System.Data.DataColumn columncheckin_date;
             
@@ -330,9 +330,9 @@ namespace CoffeeShop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn total_priceColumn {
+            public global::System.Data.DataColumn totalPriceColumn {
                 get {
-                    return this.columntotal_price;
+                    return this.columntotalPrice;
                 }
             }
             
@@ -389,11 +389,11 @@ namespace CoffeeShop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public USP_GetListBillByDateForReportRow AddUSP_GetListBillByDateForReportRow(string name, double total_price, System.DateTime checkin_date, System.DateTime checkout_date) {
+            public USP_GetListBillByDateForReportRow AddUSP_GetListBillByDateForReportRow(string name, double totalPrice, System.DateTime checkin_date, System.DateTime checkout_date) {
                 USP_GetListBillByDateForReportRow rowUSP_GetListBillByDateForReportRow = ((USP_GetListBillByDateForReportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         name,
-                        total_price,
+                        totalPrice,
                         checkin_date,
                         checkout_date};
                 rowUSP_GetListBillByDateForReportRow.ItemArray = columnValuesArray;
@@ -419,7 +419,7 @@ namespace CoffeeShop {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
                 this.columnname = base.Columns["name"];
-                this.columntotal_price = base.Columns["total_price"];
+                this.columntotalPrice = base.Columns["totalPrice"];
                 this.columncheckin_date = base.Columns["checkin_date"];
                 this.columncheckout_date = base.Columns["checkout_date"];
             }
@@ -429,8 +429,8 @@ namespace CoffeeShop {
             private void InitClass() {
                 this.columnname = new global::System.Data.DataColumn("name", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnname);
-                this.columntotal_price = new global::System.Data.DataColumn("total_price", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columntotal_price);
+                this.columntotalPrice = new global::System.Data.DataColumn("totalPrice", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columntotalPrice);
                 this.columncheckin_date = new global::System.Data.DataColumn("checkin_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columncheckin_date);
                 this.columncheckout_date = new global::System.Data.DataColumn("checkout_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -591,18 +591,18 @@ namespace CoffeeShop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public double total_price {
+            public double totalPrice {
                 get {
                     try {
-                        return ((double)(this[this.tableUSP_GetListBillByDateForReport.total_priceColumn]));
+                        return ((double)(this[this.tableUSP_GetListBillByDateForReport.totalPriceColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'total_price\' in table \'USP_GetListBillByDateForReport\' is D" +
-                                "BNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'totalPrice\' in table \'USP_GetListBillByDateForReport\' is DB" +
+                                "Null.", e);
                     }
                 }
                 set {
-                    this[this.tableUSP_GetListBillByDateForReport.total_priceColumn] = value;
+                    this[this.tableUSP_GetListBillByDateForReport.totalPriceColumn] = value;
                 }
             }
             
@@ -636,14 +636,14 @@ namespace CoffeeShop {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool Istotal_priceNull() {
-                return this.IsNull(this.tableUSP_GetListBillByDateForReport.total_priceColumn);
+            public bool IstotalPriceNull() {
+                return this.IsNull(this.tableUSP_GetListBillByDateForReport.totalPriceColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Settotal_priceNull() {
-                this[this.tableUSP_GetListBillByDateForReport.total_priceColumn] = global::System.Convert.DBNull;
+            public void SettotalPriceNull() {
+                this[this.tableUSP_GetListBillByDateForReport.totalPriceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -819,7 +819,7 @@ namespace CoffeeShop.DsRevenueReportTableAdapters {
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "USP_GetListBillByDateForReport";
             tableMapping.ColumnMappings.Add("name", "name");
-            tableMapping.ColumnMappings.Add("total_price", "total_price");
+            tableMapping.ColumnMappings.Add("totalPrice", "totalPrice");
             tableMapping.ColumnMappings.Add("checkin_date", "checkin_date");
             tableMapping.ColumnMappings.Add("checkout_date", "checkout_date");
             this._adapter.TableMappings.Add(tableMapping);

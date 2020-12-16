@@ -127,6 +127,6 @@ D:\Winform C#\CoffeeShop\CoffeeShop\bin\Debug\zh-HANS\Microsoft.ReportViewer.Des
 D:\Winform C#\CoffeeShop\CoffeeShop\bin\Debug\zh-HANT\Microsoft.ReportViewer.Design.resources.dll
 D:\Winform C#\CoffeeShop\CoffeeShop\bin\Debug\zh-HANS\Microsoft.ReportViewer.WinForms.resources.dll
 D:\Winform C#\CoffeeShop\CoffeeShop\bin\Debug\zh-HANT\Microsoft.ReportViewer.WinForms.resources.dll
-D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csprojResolveAssemblyReference.cache
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\RdlCompile.cache
 D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\RdlCompile.compiled
+D:\Winform C#\CoffeeShop\CoffeeShop\obj\Debug\CoffeeShop.csprojResolveAssemblyReference.cache

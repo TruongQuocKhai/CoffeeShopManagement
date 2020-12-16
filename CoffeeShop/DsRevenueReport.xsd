@@ -24,7 +24,7 @@
             </MainSource>
             <Mappings>
               <Mapping SourceColumn="name" DataSetColumn="name" />
-              <Mapping SourceColumn="total_price" DataSetColumn="total_price" />
+              <Mapping SourceColumn="totalPrice" DataSetColumn="totalPrice" />
               <Mapping SourceColumn="checkin_date" DataSetColumn="checkin_date" />
               <Mapping SourceColumn="checkout_date" DataSetColumn="checkout_date" />
             </Mappings>
@@ -38,7 +38,7 @@
   <xs:element name="DsRevenueReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsRevenueReport" msprop:Generator_UserDSName="DsRevenueReport">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="USP_GetListBillByDateForReport" msprop:Generator_TableClassName="USP_GetListBillByDateForReportDataTable" msprop:Generator_TableVarName="tableUSP_GetListBillByDateForReport" msprop:Generator_TablePropName="USP_GetListBillByDateForReport" msprop:Generator_RowDeletingName="USP_GetListBillByDateForReportRowDeleting" msprop:Generator_RowChangingName="USP_GetListBillByDateForReportRowChanging" msprop:Generator_RowEvHandlerName="USP_GetListBillByDateForReportRowChangeEventHandler" msprop:Generator_RowDeletedName="USP_GetListBillByDateForReportRowDeleted" msprop:Generator_UserTableName="USP_GetListBillByDateForReport" msprop:Generator_RowChangedName="USP_GetListBillByDateForReportRowChanged" msprop:Generator_RowEvArgName="USP_GetListBillByDateForReportRowChangeEvent" msprop:Generator_RowClassName="USP_GetListBillByDateForReportRow">
+        <xs:element name="USP_GetListBillByDateForReport" msprop:Generator_TableClassName="USP_GetListBillByDateForReportDataTable" msprop:Generator_TableVarName="tableUSP_GetListBillByDateForReport" msprop:Generator_RowChangedName="USP_GetListBillByDateForReportRowChanged" msprop:Generator_TablePropName="USP_GetListBillByDateForReport" msprop:Generator_RowDeletingName="USP_GetListBillByDateForReportRowDeleting" msprop:Generator_RowChangingName="USP_GetListBillByDateForReportRowChanging" msprop:Generator_RowEvHandlerName="USP_GetListBillByDateForReportRowChangeEventHandler" msprop:Generator_RowDeletedName="USP_GetListBillByDateForReportRowDeleted" msprop:Generator_RowClassName="USP_GetListBillByDateForReportRow" msprop:Generator_UserTableName="USP_GetListBillByDateForReport" msprop:Generator_RowEvArgName="USP_GetListBillByDateForReportRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
@@ -48,7 +48,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="total_price" msprop:Generator_ColumnVarNameInTable="columntotal_price" msprop:Generator_ColumnPropNameInRow="total_price" msprop:Generator_ColumnPropNameInTable="total_priceColumn" msprop:Generator_UserColumnName="total_price" type="xs:double" minOccurs="0" />
+              <xs:element name="totalPrice" msprop:Generator_ColumnVarNameInTable="columntotalPrice" msprop:Generator_ColumnPropNameInRow="totalPrice" msprop:Generator_ColumnPropNameInTable="totalPriceColumn" msprop:Generator_UserColumnName="totalPrice" type="xs:double" minOccurs="0" />
               <xs:element name="checkin_date" msprop:Generator_ColumnVarNameInTable="columncheckin_date" msprop:Generator_ColumnPropNameInRow="checkin_date" msprop:Generator_ColumnPropNameInTable="checkin_dateColumn" msprop:Generator_UserColumnName="checkin_date" type="xs:dateTime" />
               <xs:element name="checkout_date" msprop:Generator_ColumnVarNameInTable="columncheckout_date" msprop:Generator_ColumnPropNameInRow="checkout_date" msprop:Generator_ColumnPropNameInTable="checkout_dateColumn" msprop:Generator_UserColumnName="checkout_date" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>

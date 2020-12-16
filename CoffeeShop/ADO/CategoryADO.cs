@@ -65,6 +65,7 @@ namespace CoffeeShop.ADO
         // Delete category 
         public bool DeleteCategory(int id)
         {
+            FoodADO.Instance.DeleteFood(id);
             string query = string.Format("delete food_category where id = {0}", id);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;

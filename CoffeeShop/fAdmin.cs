@@ -24,6 +24,8 @@ namespace CoffeeShop
         public fAdmin()
         {
             InitializeComponent();
+
+
             // Category Combox 
             LoadCategoryIntoComboBox(cbFoodCategory);
             // Revenue
@@ -46,6 +48,9 @@ namespace CoffeeShop
             LoadListFoodTable();
             FoodTableBinding();
         }
+
+        
+       
 
         #region methods
 
@@ -80,6 +85,12 @@ namespace CoffeeShop
         {
             cb.DataSource = CategoryADO.Instance.GetListCategory();
             cb.DisplayMember = "Name";
+            
+        }
+
+        private void F_insertCategory(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         // Dish search Function by name
@@ -153,6 +164,28 @@ namespace CoffeeShop
             remove { deleteFood -= value; }
         }
 
+        // Create event Insert, Delete, Update Category
+        private event EventHandler insertCategory;
+        public event EventHandler InsertCategory
+        {
+            add { insertCategory += value; }
+            remove { insertCategory -= value; }
+        }
+
+        private event EventHandler deleteCategory;
+        public  event EventHandler DeleteCategory
+        {
+            add { deleteCategory += value; }
+            remove { deleteCategory -= value; }
+        }
+
+        private event EventHandler updateCategory;
+        public event EventHandler UpdateCategory
+        {
+            add { updateCategory += value; }
+            remove { updateCategory -= value; }
+        }
+
         // Create event Insert, Delete, Update Table
         private event EventHandler insertTable;
         public event EventHandler InsertTable
@@ -220,6 +253,7 @@ namespace CoffeeShop
             {
                 MessageBox.Show("Thêm mới thành công!");
                 LoadListFood();
+                
                 if (insertFood != null)
                     insertFood(this, new EventArgs());
             }
@@ -267,6 +301,7 @@ namespace CoffeeShop
                 MessageBox.Show("Xóa không thành công!");
             }
         }
+      
         // Event click Dishes Search 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -349,6 +384,13 @@ namespace CoffeeShop
             {
                 MessageBox.Show("Xóa danh mục thành công!");
                 LoadFoodCategory();
+                LoadCategoryIntoComboBox(cbFoodCategory);
+                LoadListFood();
+                
+                if (deleteCategory != null)
+                {
+                    deleteCategory(this, new EventArgs());
+                }
             }
             else
             {
@@ -362,6 +404,11 @@ namespace CoffeeShop
             {
                 MessageBox.Show("Thêm mới tài khoản thành công!");
                 LoadFoodCategory();
+                LoadCategoryIntoComboBox(cbFoodCategory);
+                if (insertCategory != null)
+                {
+                    insertCategory(this, new EventArgs());
+                }
             }
             else
             {
@@ -376,6 +423,11 @@ namespace CoffeeShop
             {
                 MessageBox.Show("Cập nhật tài khoản thành công!");
                 LoadFoodCategory();
+                LoadCategoryIntoComboBox(cbFoodCategory);
+                if (updateCategory != null)
+                {
+                    updateCategory(this, new EventArgs());
+                }
             }
             else
             {
@@ -442,16 +494,14 @@ namespace CoffeeShop
             }
 
         }
-
+        
         // TAB PAGE REPORT 
         private void fAdmin_Load(object sender, EventArgs e)
         {
-            this.USP_GetListBillByDateForReportTableAdapter.Fill(this.CoffeeShopManagementDataSet.USP_GetListBillByDateForReport, dtpkFromdate.Value, dtpkTodate.Value);
+            // TODO: This line of code loads data into the 'DsRevenueReport.USP_GetListBillByDateForReport' table. You can move, or remove it, as needed.
+            this.USP_GetListBillByDateForReportTableAdapter.Fill(this.DsRevenueReport.USP_GetListBillByDateForReport, dtpkFromdate.Value, dtpkTodate.Value);
             this.reportViewer1.RefreshReport();
         }
     }
-
     #endregion
-
-
 }

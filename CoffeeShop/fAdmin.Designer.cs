@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.uSPGetListBillByDateForReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dsRevenueReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.DsRevenueReport = new CoffeeShop.DsRevenueReport();
             this.USP_GetListBillByDateForReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnShowAccount = new System.Windows.Forms.TabPage();
             this.label14 = new System.Windows.Forms.Label();
@@ -86,9 +89,11 @@
             this.btnAddTable = new System.Windows.Forms.Button();
             this.dtgvFoodTable = new System.Windows.Forms.DataGridView();
             this.tpReport = new System.Windows.Forms.TabPage();
-            this.CoffeeShopManagementDataSet = new CoffeeShop.CoffeeShopManagementDataSet();
-            this.USP_GetListBillByDateForReportTableAdapter = new CoffeeShop.CoffeeShopManagementDataSetTableAdapters.USP_GetListBillByDateForReportTableAdapter();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.USP_GetListBillByDateForReportTableAdapter = new CoffeeShop.DsRevenueReportTableAdapters.USP_GetListBillByDateForReportTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.uSPGetListBillByDateForReportBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dsRevenueReportBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DsRevenueReport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.USP_GetListBillByDateForReportBindingSource)).BeginInit();
             this.btnShowAccount.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmAccountType)).BeginInit();
@@ -104,8 +109,22 @@
             this.tpFoodTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvFoodTable)).BeginInit();
             this.tpReport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.CoffeeShopManagementDataSet)).BeginInit();
             this.SuspendLayout();
+            // 
+            // uSPGetListBillByDateForReportBindingSource
+            // 
+            this.uSPGetListBillByDateForReportBindingSource.DataMember = "USP_GetListBillByDateForReport";
+            this.uSPGetListBillByDateForReportBindingSource.DataSource = this.dsRevenueReportBindingSource;
+            // 
+            // dsRevenueReportBindingSource
+            // 
+            this.dsRevenueReportBindingSource.DataSource = this.DsRevenueReport;
+            this.dsRevenueReportBindingSource.Position = 0;
+            // 
+            // DsRevenueReport
+            // 
+            this.DsRevenueReport.DataSetName = "DsRevenueReport";
+            this.DsRevenueReport.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // USP_GetListBillByDateForReportBindingSource
             // 
@@ -673,20 +692,11 @@
             this.tpReport.Text = "Report";
             this.tpReport.UseVisualStyleBackColor = true;
             // 
-            // CoffeeShopManagementDataSet
-            // 
-            this.CoffeeShopManagementDataSet.DataSetName = "CoffeeShopManagementDataSet";
-            this.CoffeeShopManagementDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // USP_GetListBillByDateForReportTableAdapter
-            // 
-            this.USP_GetListBillByDateForReportTableAdapter.ClearBeforeFill = true;
-            // 
             // reportViewer1
             // 
             this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            reportDataSource1.Name = "DataSet2";
-            reportDataSource1.Value = this.USP_GetListBillByDateForReportBindingSource;
+            reportDataSource1.Name = "DataSet1";
+            reportDataSource1.Value = this.uSPGetListBillByDateForReportBindingSource;
             this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "CoffeeShop.RevenueReport.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(3, 3);
@@ -695,15 +705,22 @@
             this.reportViewer1.Size = new System.Drawing.Size(450, 325);
             this.reportViewer1.TabIndex = 0;
             // 
+            // USP_GetListBillByDateForReportTableAdapter
+            // 
+            this.USP_GetListBillByDateForReportTableAdapter.ClearBeforeFill = true;
+            // 
             // fAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 380);
+            this.ClientSize = new System.Drawing.Size(478, 380);
             this.Controls.Add(this.tcAdmin);
             this.Name = "fAdmin";
             this.Text = "Admin";
             this.Load += new System.EventHandler(this.fAdmin_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.uSPGetListBillByDateForReportBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dsRevenueReportBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DsRevenueReport)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.USP_GetListBillByDateForReportBindingSource)).EndInit();
             this.btnShowAccount.ResumeLayout(false);
             this.btnShowAccount.PerformLayout();
@@ -724,7 +741,6 @@
             this.tpFoodTable.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgvFoodTable)).EndInit();
             this.tpReport.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.CoffeeShopManagementDataSet)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -787,8 +803,10 @@
         private System.Windows.Forms.TextBox txtTableId;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
-        private CoffeeShopManagementDataSet CoffeeShopManagementDataSet;
-        private CoffeeShopManagementDataSetTableAdapters.USP_GetListBillByDateForReportTableAdapter USP_GetListBillByDateForReportTableAdapter;
+        private DsRevenueReport DsRevenueReport;
+        private DsRevenueReportTableAdapters.USP_GetListBillByDateForReportTableAdapter USP_GetListBillByDateForReportTableAdapter;
+        private System.Windows.Forms.BindingSource dsRevenueReportBindingSource;
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.BindingSource uSPGetListBillByDateForReportBindingSource;
     }
 }

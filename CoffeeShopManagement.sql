@@ -30,15 +30,24 @@ create table food_category(
 ); 
 go
 
-create table food(
+alter table food(
 	id int identity primary key,
 	name nvarchar(100) not null default N'Chưa đặt tên',
 	food_category_id int not null,
 	price float not null,
 
-	foreign key (food_category_id) references food_category(id)
+	foreign key (food_category_id) references food_category(id)	ON DELETE CASCADE 
 );
-go 
+go
+
+-- Drop constraint Food - Category and Add new constraint with ON DELETE CASCADE 
+alter table food
+--drop constraint fk_Food_Category
+add constraint fk_Food_Category
+   foreign key (food_category_id)
+   references food_category(id)
+   ON DELETE CASCADE
+ 
 
 create table bill(
 	id int identity primary key,
@@ -59,8 +68,14 @@ create table bill_info(
 
 	foreign key (bill_id) references bill(id),
 	foreign key (food_id) references food(id),
-
 );
+
+alter table bill_info
+--drop constraint FK__bill_info__food___1DE57479
+add constraint fk_BillInfo_Food
+   foreign key (food_id)
+   references food(id)
+   ON DELETE CASCADE
 
 
 insert into account
@@ -316,8 +331,6 @@ end
 
 exec USP_GetListBill @checkin = '2020/12/09', @checkout = '2020/12/09' 
 
-alter table bill
-add total_price float
 
 -- CREATE PROCEDURE UPDATE ACCOUNT
 create proc USP_UpdateAccount
@@ -360,6 +373,10 @@ begin
    if(@count = 0)
     	update table_food set status = N'Trống' where id = @table_id
 end
+
+
+--------------
+
 
 --- FUNCTION CONVERT SIGN 
 CREATE FUNCTION FunctionConVertSign(@inputVar NVARCHAR(MAX) )
@@ -423,8 +440,10 @@ select * from food_category
 select * from table_food
 select * from account
 
-select password from account where password = 1
 
+
+delete food_category where id = 23
+delete food where id = 28
 
 
 
@@ -433,24 +452,7 @@ select password from account where password = 1
 -- inserted: chứa những trường đã insert | update vảo bảng
 -- deleted: chứa những trường đã bị xóa khỏi bảng.
 
--- VD viết trigger không cho phep xóa thông tin các nhân viên lớn hơn 40 tuổi.
-create trigger UTG_AbortOlderThan40
-on account for delete
-as
-begin
-   declare @count int = 0; -- biến count đếm số lượng những người có số tuổi lớn hơn 40
-
-   select @count = count(*) from deleted
-   where year(GETDATE()) - YEAR(deleted.birth_date) > 40
-    
-
-   if(@count > 0)  -- nếu count > 0 sẽ huy bỏ phiên giao dịch
-   begin 
-	print N'Không được xóa người lớn hơn 40 tuổi'
-		rollback tran	 -- hoàn tác câu lệnh delete
-
-   end
-end 
 
 
 
+delete food where food_category_id = 25
