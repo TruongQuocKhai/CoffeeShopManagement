@@ -26,7 +26,6 @@ namespace CoffeeShop.DTO
             if (checkout_dateTemp.ToString() != "")
             {
                 this.checkout_date = (DateTime?)checkout_dateTemp;
-
             }
             this.status = (int)row["status"];
            // this.totalPrice = (float)row["totalPrice"];

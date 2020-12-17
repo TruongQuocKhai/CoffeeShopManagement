@@ -26,6 +26,7 @@ namespace CoffeeShop
 
             if (Login(username, password))
             {
+                // GetAccountByUsername to change account information 
                 AccountDTO loginAccount = AccountADO.Instane.GetAccountByUsername(username);
                 fTableManager f = new fTableManager(loginAccount);
                 this.Hide();

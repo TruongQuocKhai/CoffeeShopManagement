@@ -45,9 +45,9 @@ namespace CoffeeShop.ADO
                     int i = 0;
                     foreach (string item in listPara)
                     {
-                        if (item.Contains('@'))
+                        // Nếu câu query có @ thì thực hiện add tham số truyền vào ngày vị trí có @
+                        if (item.Contains('@'))  
                         {
-                            // parameter truyen cac tham so an toan cho cau truy van
                             command.Parameters.AddWithValue(item, parameter[i]);
                             i++;
                         }

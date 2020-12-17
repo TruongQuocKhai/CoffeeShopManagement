@@ -331,7 +331,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.96063cm</Top>
+        <Top>0.32563cm</Top>
         <Left>1.18808cm</Left>
         <Height>1.2cm</Height>
         <Width>10cm</Width>
@@ -342,13 +342,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>1.125in</Height>
+    <Height>0.73958in</Height>
     <Style />
   </Body>
   <Width>5.14917in</Width>
   <Page>
     <PageHeader>
-      <Height>3.87807cm</Height>
+      <Height>3.93099cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

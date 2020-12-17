@@ -25,6 +25,7 @@ namespace CoffeeShop
             InitializeComponent();
             LoginAccount = acc;
         }
+        public fAccountProfile() { }
 
         #region methods
         public void ChangeAccount(AccountDTO acc)
@@ -53,6 +54,7 @@ namespace CoffeeShop
                     if (updateAccount != null)
                     {
                         updateAccount(this, new AccountEvent(AccountADO.Instane.GetAccountByUsername(username)));
+                        this.Hide();
                     }
                 }
                 else if(password == "")
@@ -63,7 +65,6 @@ namespace CoffeeShop
                 {
                     MessageBox.Show("Mật khẩu sai, vui lòng thử lại!");
                 }
-                
             }
         }
         #endregion

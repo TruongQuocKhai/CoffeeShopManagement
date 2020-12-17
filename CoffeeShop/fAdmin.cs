@@ -213,6 +213,7 @@ namespace CoffeeShop
         {
             LoadListViewByDate(dtpkFromdate.Value, dtpkTodate.Value);
         }
+
         // binding category by id of food
         private void txtId_TextChanged(object sender, EventArgs e)
         {
@@ -364,6 +365,7 @@ namespace CoffeeShop
         // reset password = 0
         private void btnResetPassword_Click(object sender, EventArgs e)
         {
+            // Update: message "Bạn có thật sự muốn rest password"
             string username = txtAccountName.Text;
             if (AccountADO.Instane.ResetPassword(username))
             {
@@ -402,7 +404,7 @@ namespace CoffeeShop
             string name = txtCategoryName.Text;
             if (CategoryADO.Instance.InsertCategory(name))
             {
-                MessageBox.Show("Thêm mới tài khoản thành công!");
+                MessageBox.Show("Thêm mới danh mục thành công!");
                 LoadFoodCategory();
                 LoadCategoryIntoComboBox(cbFoodCategory);
                 if (insertCategory != null)
@@ -412,7 +414,7 @@ namespace CoffeeShop
             }
             else
             {
-                MessageBox.Show("Thêm mới tài khoản thất bại!");
+                MessageBox.Show("Thêm mới danh mục thất bại!");
             }
         }
         private void btnUpdateCategory_Click(object sender, EventArgs e)

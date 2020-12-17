@@ -157,13 +157,13 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(6, 74);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(139, 12);
+            this.label14.Size = new System.Drawing.Size(89, 12);
             this.label14.TabIndex = 13;
-            this.label14.Text = "Quên mật khẩu, reset về 0:";
+            this.label14.Text = "Reset password:";
             // 
             // nmAccountType
             // 
-            this.nmAccountType.Location = new System.Drawing.Point(88, 40);
+            this.nmAccountType.Location = new System.Drawing.Point(96, 40);
             this.nmAccountType.Margin = new System.Windows.Forms.Padding(2);
             this.nmAccountType.Maximum = new decimal(new int[] {
             1,
@@ -176,7 +176,7 @@
             // 
             // btnResetPassword
             // 
-            this.btnResetPassword.Location = new System.Drawing.Point(166, 69);
+            this.btnResetPassword.Location = new System.Drawing.Point(95, 64);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(75, 23);
             this.btnResetPassword.TabIndex = 11;
@@ -186,14 +186,14 @@
             // 
             // txtDisplayName
             // 
-            this.txtDisplayName.Location = new System.Drawing.Point(295, 14);
+            this.txtDisplayName.Location = new System.Drawing.Point(303, 14);
             this.txtDisplayName.Name = "txtDisplayName";
             this.txtDisplayName.Size = new System.Drawing.Size(124, 19);
             this.txtDisplayName.TabIndex = 9;
             // 
             // txtAccountName
             // 
-            this.txtAccountName.Location = new System.Drawing.Point(88, 14);
+            this.txtAccountName.Location = new System.Drawing.Point(96, 14);
             this.txtAccountName.Name = "txtAccountName";
             this.txtAccountName.Size = new System.Drawing.Size(129, 19);
             this.txtAccountName.TabIndex = 8;
@@ -210,7 +210,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(223, 17);
+            this.label8.Location = new System.Drawing.Point(231, 17);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(66, 12);
             this.label8.TabIndex = 6;
@@ -262,7 +262,7 @@
             this.dtgvListAccount.Name = "dtgvListAccount";
             this.dtgvListAccount.RowHeadersWidth = 51;
             this.dtgvListAccount.RowTemplate.Height = 21;
-            this.dtgvListAccount.Size = new System.Drawing.Size(411, 191);
+            this.dtgvListAccount.Size = new System.Drawing.Size(419, 191);
             this.dtgvListAccount.TabIndex = 0;
             // 
             // tpFoodCategory

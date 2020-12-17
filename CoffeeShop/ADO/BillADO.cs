@@ -25,7 +25,7 @@ namespace CoffeeShop.ADO
             private set { instance = value; }
         }
 
-        // Lấy thông tin bill theo id của bàn
+        // Lấy thông tin bill theo khóa ngoại table_id
         public int GetUncheckBillIdByTableId(int id)
         {
             DataTable data = DataProvider.Instance.ExecuteQuery("SELECT * FROM bill WHERE table_id = " + id + " and status = 0");
@@ -54,14 +54,13 @@ namespace CoffeeShop.ADO
 
         public void Checkout(int id, float totalPrice)
         {
-            string query = "UPDATE bill SET checkout_date = GETDATE(), status = 1, "+ "total_price = " + totalPrice + "WHERE id = " +id;
+            string query = "UPDATE bill SET checkout_date = GETDATE(), status = 1, "+ "totalPrice = " + totalPrice + " WHERE id = " +id;
             DataProvider.Instance.ExecuteNonQuery(query);
         }
 
-
         public DataTable GetListBill(DateTime checkin, DateTime checkout)
         {
-            return DataProvider.Instance.ExecuteQuery("exec USP_GetListBill @checkin , @checkout ", new object[] { checkin, checkout });
+            return DataProvider.Instance.ExecuteQuery("USP_GetListBill @checkin , @checkout ", new object[] { checkin, checkout });
         }
     }
 }

@@ -274,6 +274,7 @@ begin
 		update table_food set status = N'Trống' where id = @table_id   
 end
 
+   select * from bill
 
 -- CREATE PROCEDURE CHUYEN BAN
 create proc USP_SwitchTable
@@ -285,8 +286,8 @@ begin
 	declare @isFirstTableEmpty int = 1
 	declare @isSecondTableEmpty int = 1
 
-	select @secondBillId = id from bill where table_id = @tableId2 and status = 0
 	select @firstBillId = id from bill where table_id = @tableId1 and status = 0
+	select @secondBillId = id from bill where table_id = @tableId2 and status = 0
 
 	-- neu bill 1 null -> tao 1 bill moi
 	if(@firstBillId is null)
@@ -296,8 +297,8 @@ begin
 
 		select @firstBillId = max(id) from bill where table_id = @tableId1 and status = 0 
 	end
-	select @isFirstTableEmpty = count(*) from bill_info where bill_id = @firstBillId 
-
+	select @isFirstTableEmpty = count(*) from bill_info where bill_id = @firstBillId
+	
 	-- bill 2
 	if(@secondBillId is null)
 	begin
@@ -320,16 +321,27 @@ begin
 end
 
 -- CREATE PROCEDURE GET LIST BILL
-create proc USP_GetListBill		 
-@checkin date, @checkout date
+alter proc USP_GetListBill		 
+	@checkin date, @checkout date
 as
 begin
-	select t.name as [Tên bàn], b.total_price as [Tổng bill], b.checkin_date as [Ngày vào], b.checkout_date as [Ngày ra] 
+	
+	--declare @checkout as datetime
+	--declare @checkin as datetime
+	set @checkout = GETDATE() + 1 	
+	select t.name as [Tên bàn], b.totalPrice as [Tổng bill], b.checkin_date as [Ngày vào], b.checkout_date as [Ngày ra] 
 	from bill as b, table_food as t
-	where checkin_date >= @checkin and checkout_date <= @checkout and b.status = 1 and b.table_id = t.id
+	where checkin_date >= @checkin and checkout_date < @checkout and b.status = 1 and b.table_id = t.id
+	order by b.id desc
 end 
 
-exec USP_GetListBill @checkin = '2020/12/09', @checkout = '2020/12/09' 
+exec USP_GetListBill @checkin = '2020/12/17', @checkout = '2020/12/17' 
+
+
+SELECT * 
+FROM 
+     bill_info 
+ORDER BY id  DESC
 
 
 -- CREATE PROCEDURE UPDATE ACCOUNT
@@ -441,9 +453,6 @@ select * from table_food
 select * from account
 
 
-
-delete food_category where id = 23
-delete food where id = 28
 
 
 
