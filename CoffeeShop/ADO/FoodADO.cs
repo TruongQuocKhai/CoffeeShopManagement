@@ -54,23 +54,25 @@ namespace CoffeeShop.ADO
             return listFood;
         }
 
-        public bool InsertFood(string name, int categoryId, float price)
+        // CanInsertFood
+        public bool CanAddFood(string name, int categoryId, float price)
         {
             string query = string.Format("insert into food (name, food_category_id, price) values (N'{0}', {1}, {2})", name, categoryId, price);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }
-
-        public bool UpdateFood(string name, int categoryId, float price, int id)
+        
+        // CanUpdateFood
+        public bool CanUpdateFood(string name, int categoryId, float price, int id)
         {
             string query = string.Format("update food set name = N'{0}', food_category_id = {1}, price = {2} where id = {3}", name, categoryId, price, id);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }
-
-        public bool DeleteFood(int id)
+        // CanDeleteFood
+        public bool CanRemoveFood(int id)
         {
-            BillInforADO.Instance.DeleteBillInfoByFoodId(id);
+            BillInforADO.Instance.RemoveBillInfoByFoodId(id);
             string query = "delete food where id = " + id;
             int result =DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;

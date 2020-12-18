@@ -41,11 +41,10 @@ namespace CoffeeShop.ADO
             }
         }
 
-        public void InsertBill(int id)
+        public void AddBill(int id)
         {
             DataProvider.Instance.ExecuteNonQuery("exec USP_InsertBill @table_id" , new object[] { id });
         }                                            
-
 
         public int GetMaxIdBill()
         { // try catch -> return 1;

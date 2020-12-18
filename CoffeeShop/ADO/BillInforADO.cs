@@ -38,12 +38,12 @@ namespace CoffeeShop.ADO
             return listBillInfor;
         }
 
-        public void InsertBillInfo(int billId, int foodId, int count)
+        public void AddBillInfo(int billId, int foodId, int count)
         {
             DataProvider.Instance.ExecuteNonQuery("exec USP_InsertBillInfo @bill_id , @food_id , @count", new object[] { billId, foodId, count });
         }
 
-        public void DeleteBillInfoByFoodId(int id)
+        public void RemoveBillInfoByFoodId(int id)
         {
             DataProvider.Instance.ExecuteQuery("delete bill_info where food_id = " + id);
         }

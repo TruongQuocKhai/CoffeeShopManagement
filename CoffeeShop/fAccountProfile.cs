@@ -26,8 +26,6 @@ namespace CoffeeShop
             LoginAccount = acc;
         }
         public fAccountProfile() { }
-
-        #region methods
         public void ChangeAccount(AccountDTO acc)
         {
             txbUserName.Text = LoginAccount.Username;
@@ -48,7 +46,7 @@ namespace CoffeeShop
             }
             else
             {
-                if (AccountADO.Instane.UpdateAccount(username, displayName, password, newPassword))
+                if (AccountADO.Instane.HasChangedAccount(username, displayName, password, newPassword))
                 {
                     MessageBox.Show("Cập nhật thành công!");
                     if (updateAccount != null)
@@ -57,7 +55,7 @@ namespace CoffeeShop
                         this.Hide();
                     }
                 }
-                else if(password == "")
+                else if (password == "")
                 {
                     MessageBox.Show("Vui lòng nhập mật khẩu để đổi tên hiển thị!");
                 }
@@ -67,6 +65,9 @@ namespace CoffeeShop
                 }
             }
         }
+
+        #region methods
+
         #endregion
 
         #region events
@@ -86,7 +87,6 @@ namespace CoffeeShop
         {
             this.Close();
         }
-
         #endregion
     }
 

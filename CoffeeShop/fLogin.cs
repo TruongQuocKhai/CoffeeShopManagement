@@ -24,7 +24,7 @@ namespace CoffeeShop
             string username = txbUserName.Text;
             string password = txbPassword.Text;
 
-            if (Login(username, password))
+            if (AccountADO.Instane.CanGetUsernamePassword(username, password))
             {
                 // GetAccountByUsername to change account information 
                 AccountDTO loginAccount = AccountADO.Instane.GetAccountByUsername(username);
@@ -38,12 +38,6 @@ namespace CoffeeShop
                 MessageBox.Show("Username hoặc password sai!");
             }
         }
-
-        private bool Login(string username, string password)
-        {
-            return AccountADO.Instane.Login(username, password);
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();

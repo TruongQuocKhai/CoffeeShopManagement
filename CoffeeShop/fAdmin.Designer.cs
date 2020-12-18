@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource3 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.uSPGetListBillByDateForReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dsRevenueReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DsRevenueReport = new CoffeeShop.DsRevenueReport();
@@ -53,7 +53,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.btnUpdateCategory = new System.Windows.Forms.Button();
-            this.btnDeleteCategory = new System.Windows.Forms.Button();
+            this.btnRemoveCategory = new System.Windows.Forms.Button();
             this.btnAddCategory = new System.Windows.Forms.Button();
             this.dtgvFoodCategory = new System.Windows.Forms.DataGridView();
             this.tpFood = new System.Windows.Forms.TabPage();
@@ -85,7 +85,7 @@
             this.txtTableName = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.btnUpdateTable = new System.Windows.Forms.Button();
-            this.btnDeleteTable = new System.Windows.Forms.Button();
+            this.btnRemoveTable = new System.Windows.Forms.Button();
             this.btnAddTable = new System.Windows.Forms.Button();
             this.dtgvFoodTable = new System.Windows.Forms.DataGridView();
             this.tpReport = new System.Windows.Forms.TabPage();
@@ -147,7 +147,7 @@
             this.btnShowAccount.Location = new System.Drawing.Point(4, 22);
             this.btnShowAccount.Name = "btnShowAccount";
             this.btnShowAccount.Padding = new System.Windows.Forms.Padding(3);
-            this.btnShowAccount.Size = new System.Drawing.Size(456, 331);
+            this.btnShowAccount.Size = new System.Drawing.Size(466, 337);
             this.btnShowAccount.TabIndex = 4;
             this.btnShowAccount.Text = "Tài khoản";
             this.btnShowAccount.UseVisualStyleBackColor = true;
@@ -243,7 +243,7 @@
             this.btnDeleteAccount.TabIndex = 2;
             this.btnDeleteAccount.Text = "Xóa";
             this.btnDeleteAccount.UseVisualStyleBackColor = true;
-            this.btnDeleteAccount.Click += new System.EventHandler(this.btnDeleteAccount_Click);
+            this.btnDeleteAccount.Click += new System.EventHandler(this.btnRemoveAccount_Click);
             // 
             // btnAddAccount
             // 
@@ -272,13 +272,13 @@
             this.tpFoodCategory.Controls.Add(this.label11);
             this.tpFoodCategory.Controls.Add(this.label10);
             this.tpFoodCategory.Controls.Add(this.btnUpdateCategory);
-            this.tpFoodCategory.Controls.Add(this.btnDeleteCategory);
+            this.tpFoodCategory.Controls.Add(this.btnRemoveCategory);
             this.tpFoodCategory.Controls.Add(this.btnAddCategory);
             this.tpFoodCategory.Controls.Add(this.dtgvFoodCategory);
             this.tpFoodCategory.Location = new System.Drawing.Point(4, 22);
             this.tpFoodCategory.Name = "tpFoodCategory";
             this.tpFoodCategory.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFoodCategory.Size = new System.Drawing.Size(456, 331);
+            this.tpFoodCategory.Size = new System.Drawing.Size(466, 337);
             this.tpFoodCategory.TabIndex = 2;
             this.tpFoodCategory.Text = "Danh mục";
             this.tpFoodCategory.UseVisualStyleBackColor = true;
@@ -325,15 +325,15 @@
             this.btnUpdateCategory.UseVisualStyleBackColor = true;
             this.btnUpdateCategory.Click += new System.EventHandler(this.btnUpdateCategory_Click);
             // 
-            // btnDeleteCategory
+            // btnRemoveCategory
             // 
-            this.btnDeleteCategory.Location = new System.Drawing.Point(97, 49);
-            this.btnDeleteCategory.Name = "btnDeleteCategory";
-            this.btnDeleteCategory.Size = new System.Drawing.Size(78, 23);
-            this.btnDeleteCategory.TabIndex = 2;
-            this.btnDeleteCategory.Text = "Xóa";
-            this.btnDeleteCategory.UseVisualStyleBackColor = true;
-            this.btnDeleteCategory.Click += new System.EventHandler(this.btnDeleteCategory_Click);
+            this.btnRemoveCategory.Location = new System.Drawing.Point(97, 49);
+            this.btnRemoveCategory.Name = "btnRemoveCategory";
+            this.btnRemoveCategory.Size = new System.Drawing.Size(78, 23);
+            this.btnRemoveCategory.TabIndex = 2;
+            this.btnRemoveCategory.Text = "Xóa";
+            this.btnRemoveCategory.UseVisualStyleBackColor = true;
+            this.btnRemoveCategory.Click += new System.EventHandler(this.btnRemoveCategory_Click);
             // 
             // btnAddCategory
             // 
@@ -373,7 +373,7 @@
             this.tpFood.Location = new System.Drawing.Point(4, 22);
             this.tpFood.Name = "tpFood";
             this.tpFood.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFood.Size = new System.Drawing.Size(456, 331);
+            this.tpFood.Size = new System.Drawing.Size(466, 337);
             this.tpFood.TabIndex = 1;
             this.tpFood.Text = "Thức ăn";
             this.tpFood.UseVisualStyleBackColor = true;
@@ -475,7 +475,7 @@
             this.btnEditFood.TabIndex = 3;
             this.btnEditFood.Text = "Cập nhật";
             this.btnEditFood.UseVisualStyleBackColor = true;
-            this.btnEditFood.Click += new System.EventHandler(this.btnEditFood_Click);
+            this.btnEditFood.Click += new System.EventHandler(this.btnUpdateFood_Click);
             // 
             // btnDeleteFood
             // 
@@ -485,7 +485,7 @@
             this.btnDeleteFood.TabIndex = 2;
             this.btnDeleteFood.Text = "Xóa";
             this.btnDeleteFood.UseVisualStyleBackColor = true;
-            this.btnDeleteFood.Click += new System.EventHandler(this.btnDeleteFood_Click);
+            this.btnDeleteFood.Click += new System.EventHandler(this.btnRemoveFood_Click);
             // 
             // btnAddFood
             // 
@@ -519,7 +519,7 @@
             this.tpBill.Location = new System.Drawing.Point(4, 22);
             this.tpBill.Name = "tpBill";
             this.tpBill.Padding = new System.Windows.Forms.Padding(3);
-            this.tpBill.Size = new System.Drawing.Size(456, 331);
+            this.tpBill.Size = new System.Drawing.Size(466, 337);
             this.tpBill.TabIndex = 0;
             this.tpBill.Text = "Doanh thu";
             this.tpBill.UseVisualStyleBackColor = true;
@@ -536,7 +536,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(165, 18);
+            this.label2.Location = new System.Drawing.Point(12, 43);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 12);
             this.label2.TabIndex = 5;
@@ -544,21 +544,25 @@
             // 
             // dtpkTodate
             // 
-            this.dtpkTodate.Location = new System.Drawing.Point(225, 14);
+            this.dtpkTodate.CustomFormat = "MMMMdd, yyyy  |  hh:mm";
+            this.dtpkTodate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpkTodate.Location = new System.Drawing.Point(74, 39);
             this.dtpkTodate.Name = "dtpkTodate";
-            this.dtpkTodate.Size = new System.Drawing.Size(92, 19);
+            this.dtpkTodate.Size = new System.Drawing.Size(164, 19);
             this.dtpkTodate.TabIndex = 3;
             // 
             // dtpkFromdate
             // 
-            this.dtpkFromdate.Location = new System.Drawing.Point(64, 14);
+            this.dtpkFromdate.CustomFormat = "MMMMdd, yyyy  |  hh:mm";
+            this.dtpkFromdate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpkFromdate.Location = new System.Drawing.Point(74, 14);
             this.dtpkFromdate.Name = "dtpkFromdate";
-            this.dtpkFromdate.Size = new System.Drawing.Size(92, 19);
+            this.dtpkFromdate.Size = new System.Drawing.Size(164, 19);
             this.dtpkFromdate.TabIndex = 2;
             // 
             // btnViewBill
             // 
-            this.btnViewBill.Location = new System.Drawing.Point(323, 12);
+            this.btnViewBill.Location = new System.Drawing.Point(254, 37);
             this.btnViewBill.Name = "btnViewBill";
             this.btnViewBill.Size = new System.Drawing.Size(75, 23);
             this.btnViewBill.TabIndex = 1;
@@ -570,11 +574,11 @@
             // 
             this.dtgvBill.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dtgvBill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgvBill.Location = new System.Drawing.Point(11, 45);
+            this.dtgvBill.Location = new System.Drawing.Point(11, 64);
             this.dtgvBill.Name = "dtgvBill";
             this.dtgvBill.RowHeadersWidth = 51;
             this.dtgvBill.RowTemplate.Height = 21;
-            this.dtgvBill.Size = new System.Drawing.Size(387, 294);
+            this.dtgvBill.Size = new System.Drawing.Size(449, 256);
             this.dtgvBill.TabIndex = 0;
             // 
             // tcAdmin
@@ -588,7 +592,7 @@
             this.tcAdmin.Location = new System.Drawing.Point(12, 12);
             this.tcAdmin.Name = "tcAdmin";
             this.tcAdmin.SelectedIndex = 0;
-            this.tcAdmin.Size = new System.Drawing.Size(464, 357);
+            this.tcAdmin.Size = new System.Drawing.Size(474, 363);
             this.tcAdmin.TabIndex = 0;
             // 
             // tpFoodTable
@@ -598,13 +602,13 @@
             this.tpFoodTable.Controls.Add(this.txtTableName);
             this.tpFoodTable.Controls.Add(this.label13);
             this.tpFoodTable.Controls.Add(this.btnUpdateTable);
-            this.tpFoodTable.Controls.Add(this.btnDeleteTable);
+            this.tpFoodTable.Controls.Add(this.btnRemoveTable);
             this.tpFoodTable.Controls.Add(this.btnAddTable);
             this.tpFoodTable.Controls.Add(this.dtgvFoodTable);
             this.tpFoodTable.Location = new System.Drawing.Point(4, 22);
             this.tpFoodTable.Name = "tpFoodTable";
             this.tpFoodTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tpFoodTable.Size = new System.Drawing.Size(456, 331);
+            this.tpFoodTable.Size = new System.Drawing.Size(466, 337);
             this.tpFoodTable.TabIndex = 6;
             this.tpFoodTable.Text = "Bàn";
             this.tpFoodTable.UseVisualStyleBackColor = true;
@@ -652,15 +656,15 @@
             this.btnUpdateTable.UseVisualStyleBackColor = true;
             this.btnUpdateTable.Click += new System.EventHandler(this.btnUpdateTable_Click);
             // 
-            // btnDeleteTable
+            // btnRemoveTable
             // 
-            this.btnDeleteTable.Location = new System.Drawing.Point(91, 48);
-            this.btnDeleteTable.Name = "btnDeleteTable";
-            this.btnDeleteTable.Size = new System.Drawing.Size(75, 23);
-            this.btnDeleteTable.TabIndex = 2;
-            this.btnDeleteTable.Text = "Xóa";
-            this.btnDeleteTable.UseVisualStyleBackColor = true;
-            this.btnDeleteTable.Click += new System.EventHandler(this.btnDeleteTable_Click);
+            this.btnRemoveTable.Location = new System.Drawing.Point(91, 48);
+            this.btnRemoveTable.Name = "btnRemoveTable";
+            this.btnRemoveTable.Size = new System.Drawing.Size(75, 23);
+            this.btnRemoveTable.TabIndex = 2;
+            this.btnRemoveTable.Text = "Xóa";
+            this.btnRemoveTable.UseVisualStyleBackColor = true;
+            this.btnRemoveTable.Click += new System.EventHandler(this.btnRemoveTable_Click);
             // 
             // btnAddTable
             // 
@@ -687,7 +691,7 @@
             this.tpReport.Location = new System.Drawing.Point(4, 22);
             this.tpReport.Name = "tpReport";
             this.tpReport.Padding = new System.Windows.Forms.Padding(3);
-            this.tpReport.Size = new System.Drawing.Size(456, 331);
+            this.tpReport.Size = new System.Drawing.Size(466, 337);
             this.tpReport.TabIndex = 5;
             this.tpReport.Text = "Report";
             this.tpReport.UseVisualStyleBackColor = true;
@@ -695,14 +699,14 @@
             // reportViewer1
             // 
             this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            reportDataSource1.Name = "DataSet1";
-            reportDataSource1.Value = this.uSPGetListBillByDateForReportBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            reportDataSource3.Name = "DataSet1";
+            reportDataSource3.Value = this.uSPGetListBillByDateForReportBindingSource;
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource3);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "CoffeeShop.RevenueReport.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(3, 3);
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.Size = new System.Drawing.Size(450, 325);
+            this.reportViewer1.Size = new System.Drawing.Size(460, 331);
             this.reportViewer1.TabIndex = 0;
             // 
             // USP_GetListBillByDateForReportTableAdapter
@@ -713,7 +717,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(478, 380);
+            this.ClientSize = new System.Drawing.Size(514, 405);
             this.Controls.Add(this.tcAdmin);
             this.Name = "fAdmin";
             this.Text = "Admin";
@@ -788,7 +792,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnUpdateCategory;
-        private System.Windows.Forms.Button btnDeleteCategory;
+        private System.Windows.Forms.Button btnRemoveCategory;
         private System.Windows.Forms.Button btnAddCategory;
         private System.Windows.Forms.DataGridView dtgvFoodCategory;
         private System.Windows.Forms.TabPage tpReport;
@@ -797,7 +801,7 @@
         private System.Windows.Forms.TextBox txtTableName;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnUpdateTable;
-        private System.Windows.Forms.Button btnDeleteTable;
+        private System.Windows.Forms.Button btnRemoveTable;
         private System.Windows.Forms.Button btnAddTable;
         private System.Windows.Forms.DataGridView dtgvFoodTable;
         private System.Windows.Forms.TextBox txtTableId;

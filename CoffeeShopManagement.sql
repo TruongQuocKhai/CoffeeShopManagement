@@ -322,7 +322,7 @@ end
 
 -- CREATE PROCEDURE GET LIST BILL
 alter proc USP_GetListBill		 
-	@checkin date, @checkout date
+	@checkin datetime, @checkout datetime
 as
 begin
 	
@@ -337,6 +337,7 @@ end
 
 exec USP_GetListBill @checkin = '2020/12/17', @checkout = '2020/12/17' 
 
+select * from bill order by id
 
 SELECT * 
 FROM 

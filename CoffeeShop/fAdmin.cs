@@ -25,7 +25,6 @@ namespace CoffeeShop
         {
             InitializeComponent();
 
-
             // Category Combox 
             LoadCategoryIntoComboBox(cbFoodCategory);
             // Revenue
@@ -48,9 +47,6 @@ namespace CoffeeShop
             LoadListFoodTable();
             FoodTableBinding();
         }
-
-        
-       
 
         #region methods
 
@@ -88,7 +84,7 @@ namespace CoffeeShop
             
         }
 
-        private void F_insertCategory(object sender, EventArgs e)
+        private void F_addCategory(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
@@ -142,12 +138,12 @@ namespace CoffeeShop
 
         #region events
 
-        // Create event Insert, Delete, Update Food
-        private event EventHandler insertFood;
-        public event EventHandler InsertFood
+        // Create event Add, Remove, Update Food
+        private event EventHandler addFood;
+        public event EventHandler AddFood
         {
-            add { insertFood += value; }
-            remove { insertFood -= value; }
+            add { addFood += value; }
+            remove { addFood -= value; }
         }
 
         private event EventHandler updateFood;
@@ -157,26 +153,26 @@ namespace CoffeeShop
             remove { updateFood -= value; }
         }
 
-        private event EventHandler deleteFood;
-        public event EventHandler DeleteFood
+        private event EventHandler removeFood;
+        public event EventHandler RemoveFood
         {
-            add { deleteFood += value; }
-            remove { deleteFood -= value; }
+            add { removeFood += value; }
+            remove { removeFood -= value; }
         }
 
-        // Create event Insert, Delete, Update Category
-        private event EventHandler insertCategory;
-        public event EventHandler InsertCategory
+        // Create event Add, Remove, Update Category
+        private event EventHandler addCategory;
+        public event EventHandler AddCategory
         {
-            add { insertCategory += value; }
-            remove { insertCategory -= value; }
+            add { addCategory += value; }
+            remove { addCategory -= value; }
         }
 
-        private event EventHandler deleteCategory;
-        public  event EventHandler DeleteCategory
+        private event EventHandler removeCategory;
+        public  event EventHandler RemoveCategory
         {
-            add { deleteCategory += value; }
-            remove { deleteCategory -= value; }
+            add { removeCategory += value; }
+            remove { removeCategory -= value; }
         }
 
         private event EventHandler updateCategory;
@@ -186,19 +182,19 @@ namespace CoffeeShop
             remove { updateCategory -= value; }
         }
 
-        // Create event Insert, Delete, Update Table
-        private event EventHandler insertTable;
-        public event EventHandler InsertTable
+        // Create event Add, Remove, Update Table
+        private event EventHandler addTable;
+        public event EventHandler AddTable
         {
-            add { insertTable += value; }
-            remove { insertTable -= value; }
+            add { addTable += value; }
+            remove { addTable -= value; }
         }
 
-        private event EventHandler deleteTable;
-        public event EventHandler DeleteTable
+        private event EventHandler removeTable;
+        public event EventHandler RemoveTable
         {
-            add { deleteTable += value; }
-            remove { deleteTable -= value; }
+            add { removeTable += value; }
+            remove { removeTable -= value; }
         }
 
         private event EventHandler updateTable;
@@ -250,27 +246,45 @@ namespace CoffeeShop
             int category = (cbFoodCategory.SelectedItem as CategoryDTO).Id;
             float price = (float)nmPrice.Value;
 
-            if (FoodADO.Instance.InsertFood(name, category, price))
+            if (FoodADO.Instance.CanAddFood(name, category, price))
             {
                 MessageBox.Show("Thêm mới thành công!");
                 LoadListFood();
                 
-                if (insertFood != null)
-                    insertFood(this, new EventArgs());
+                if (addFood != null)
+                    addFood(this, new EventArgs());
             }
             else
             {
                 MessageBox.Show("Thêm mới món không thành công!");
             }
         }
-        private void btnEditFood_Click(object sender, EventArgs e)
+        private void btnRemoveFood_Click(object sender, EventArgs e)
+        {
+            int foodId = Convert.ToInt32(txtId.Text);
+
+            if (FoodADO.Instance.CanRemoveFood(foodId))
+            {
+                MessageBox.Show("Xóa thành công!");
+                LoadListFood();
+                if (removeFood != null)
+                {
+                    removeFood(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Xóa không thành công!");
+            }
+        }
+        private void btnUpdateFood_Click(object sender, EventArgs e)
         {
             int foodId = Convert.ToInt32(txtId.Text);
             string name = txtFoodName.Text;
             int categoryId = (cbFoodCategory.SelectedItem as CategoryDTO).Id;
             float price = (float)nmPrice.Value;
 
-            if (FoodADO.Instance.UpdateFood(name, categoryId, price, foodId))
+            if (FoodADO.Instance.CanUpdateFood(name, categoryId, price, foodId))
             {
                 MessageBox.Show("Cập nhật thành công!");
                 LoadListFood();
@@ -284,24 +298,6 @@ namespace CoffeeShop
                 MessageBox.Show("Cập nhật không thành công!");
             }
         }
-        private void btnDeleteFood_Click(object sender, EventArgs e)
-        {
-            int foodId = Convert.ToInt32(txtId.Text);
-
-            if (FoodADO.Instance.DeleteFood(foodId))
-            {
-                MessageBox.Show("Xóa thành công!");
-                LoadListFood();
-                if (deleteFood != null)
-                {
-                    deleteFood(this, new EventArgs());
-                }
-            }
-            else
-            {
-                MessageBox.Show("Xóa không thành công!");
-            }
-        }
       
         // Event click Dishes Search 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -310,14 +306,14 @@ namespace CoffeeShop
         }
 
         // TAB PAGE ACCOUNT
-        // event click Add, Delete, Update Account inside admin
+        // event click Add, Remove, Update Account inside admin
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
             string username = txtAccountName.Text;
             string displayName = txtDisplayName.Text;
             int type = Convert.ToInt32(nmAccountType.Text);
 
-            if (AccountADO.Instane.InsertAccount(username, displayName, type))
+            if (AccountADO.Instane.CanAddAccount(username, displayName, type))
             {
                 MessageBox.Show("Thêm mới tài khoản thành công!");
                 LoadListAccount();
@@ -327,23 +323,7 @@ namespace CoffeeShop
                 MessageBox.Show("Thêm mới tài khoản thất bại!");
             }
         }
-        private void btnUpdateAccount_Click(object sender, EventArgs e)
-        {
-            string username = txtAccountName.Text;
-            string displayName = txtDisplayName.Text;
-            int type = (int)nmAccountType.Value;
-
-            if (AccountADO.Instane.UpdateAccountInsideAdmin(username, displayName, type))
-            {
-                MessageBox.Show("Cập nhật tài khoản thành công!");
-                LoadListAccount();
-            }
-            else
-            {
-                MessageBox.Show("Cập nhật tài khoản thất bại!");
-            }
-        }
-        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        private void btnRemoveAccount_Click(object sender, EventArgs e)
         {
 
             string username = txtAccountName.Text;
@@ -352,7 +332,7 @@ namespace CoffeeShop
                 MessageBox.Show("Bạn không thể xóa tài khoản hiện tại của bạn!");
                 return;
             }
-            if (AccountADO.Instane.DeleteAccount(username))
+            if (AccountADO.Instane.CanRemoveAccount(username))
             {
                 MessageBox.Show("Xóa tài khoản thành công!");
                 LoadListAccount();
@@ -362,12 +342,28 @@ namespace CoffeeShop
                 MessageBox.Show("Xóa tài khoản thất bại!");
             }
         }
+        private void btnUpdateAccount_Click(object sender, EventArgs e)
+        {
+            string username = txtAccountName.Text;
+            string displayName = txtDisplayName.Text;
+            int type = (int)nmAccountType.Value;
+
+            if (AccountADO.Instane.CanUpdateAccount(username, displayName, type))
+            {
+                MessageBox.Show("Cập nhật tài khoản thành công!");
+                LoadListAccount();
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật tài khoản thất bại!");
+            }
+        }
         // reset password = 0
         private void btnResetPassword_Click(object sender, EventArgs e)
         {
             // Update: message "Bạn có thật sự muốn rest password"
             string username = txtAccountName.Text;
-            if (AccountADO.Instane.ResetPassword(username))
+            if (AccountADO.Instane.CanResetPassword(username))
             {
                 MessageBox.Show("Reset password thành công!");
             }
@@ -378,38 +374,18 @@ namespace CoffeeShop
         }
 
         // TAB PAGE CATEGORY
-        // event click Add, Delete, Update Category
-        private void btnDeleteCategory_Click(object sender, EventArgs e)
-        {
-            int id = Convert.ToInt32(txtCategoryId.Text);
-            if (CategoryADO.Instance.DeleteCategory(id))
-            {
-                MessageBox.Show("Xóa danh mục thành công!");
-                LoadFoodCategory();
-                LoadCategoryIntoComboBox(cbFoodCategory);
-                LoadListFood();
-                
-                if (deleteCategory != null)
-                {
-                    deleteCategory(this, new EventArgs());
-                }
-            }
-            else
-            {
-                MessageBox.Show("Xóa danh mục thất bại!");
-            }
-        }
+        // event click Add, Remove, Update Category
         private void btnAddCategory_Click(object sender, EventArgs e)
         {
             string name = txtCategoryName.Text;
-            if (CategoryADO.Instance.InsertCategory(name))
+            if (CategoryADO.Instance.CanAddCategory(name))
             {
                 MessageBox.Show("Thêm mới danh mục thành công!");
                 LoadFoodCategory();
                 LoadCategoryIntoComboBox(cbFoodCategory);
-                if (insertCategory != null)
+                if (addCategory != null)
                 {
-                    insertCategory(this, new EventArgs());
+                    addCategory(this, new EventArgs());
                 }
             }
             else
@@ -417,11 +393,31 @@ namespace CoffeeShop
                 MessageBox.Show("Thêm mới danh mục thất bại!");
             }
         }
+        private void btnRemoveCategory_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txtCategoryId.Text);
+            if (CategoryADO.Instance.CanRemoveCategory(id))
+            {
+                MessageBox.Show("Xóa danh mục thành công!");
+                LoadFoodCategory();
+                LoadCategoryIntoComboBox(cbFoodCategory);
+                LoadListFood();
+                
+                if (removeCategory != null)
+                {
+                    removeCategory(this, new EventArgs());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Xóa danh mục thất bại!");
+            }
+        }
         private void btnUpdateCategory_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(txtCategoryId.Text);
             string name = txtCategoryName.Text;
-            if (CategoryADO.Instance.UpdateCategory(id, name))
+            if (CategoryADO.Instance.CanUpdateCategory(id, name))
             {
                 MessageBox.Show("Cập nhật tài khoản thành công!");
                 LoadFoodCategory();
@@ -439,18 +435,18 @@ namespace CoffeeShop
         }
 
         // TAB PAGE TABLE
-        // event click Add, Delete, Update FoodTable
+        // event click Add, Remove, Update FoodTable
         private void btnAddTable_Click(object sender, EventArgs e)
         {
             string name = txtTableName.Text;
 
-            if (TableADO.Instance.InsertFoodTabel(name))
+            if (TableADO.Instance.CanAddTable(name))
             {
                 MessageBox.Show("Thêm bàn thành công!");
                 LoadListFoodTable();
-                if (insertTable != null)
+                if (addTable != null)
                 {
-                    insertTable(this, new EventArgs());
+                    addTable(this, new EventArgs());
                 }
             }
             else
@@ -458,11 +454,31 @@ namespace CoffeeShop
                 MessageBox.Show("Thêm bàn thất bại!");
             }
         }
+        private void btnRemoveTable_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(txtTableId.Text);
+            if (TableADO.Instance.CanRemoveTable(id))
+            {
+                MessageBox.Show("Xóa bàn thành công!");
+                LoadListFoodTable();
+                if (removeTable != null)
+                {
+                    removeTable(this, new EventArgs());
+                }
+            }
+            else
+            {
+                {
+                    MessageBox.Show("Xóa bàn thất bại!");
+                }
+            }
+
+        }
         private void btnUpdateTable_Click(object sender, EventArgs e)
         {
             string name = txtTableName.Text;
             int id = Convert.ToInt32(txtTableId.Text);
-            if (TableADO.Instance.UpdateFoodTable(id, name))
+            if (TableADO.Instance.CanUpdateTable(id, name))
             {
                 MessageBox.Show("Cập nhật bàn thành công!");
                 LoadListFoodTable();
@@ -475,26 +491,6 @@ namespace CoffeeShop
             {
                 MessageBox.Show("Cập nhật bàn thất bại!");
             }
-        }
-        private void btnDeleteTable_Click(object sender, EventArgs e)
-        {
-            int id = Convert.ToInt32(txtTableId.Text);
-            if (TableADO.Instance.DeleteFoodTable(id))
-            {
-                MessageBox.Show("Xóa bàn thành công!");
-                LoadListFoodTable();
-                if (deleteTable != null)
-                {
-                    deleteTable(this, new EventArgs());
-                }
-            }
-            else
-            {
-                {
-                    MessageBox.Show("Xóa bàn thất bại!");
-                }
-            }
-
         }
         
         // TAB PAGE REPORT 

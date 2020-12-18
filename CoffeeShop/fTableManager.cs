@@ -151,14 +151,14 @@ namespace CoffeeShop
                 int billId = BillADO.Instance.GetUncheckBillIdByTableId(table.Id); // Lay thong tin bill du vao id table
                 int foodId = (cbFood.SelectedItem as FoodDTO).Id;
                 int count = (int)nmFoodCount.Value;
-                if (billId == -1) // billId == -1: bàn trống, ko có bill -> insert bill mới
+                if (billId == -1) // billId == -1: bàn trống, ko có bill -> Add bill mới
                 {
-                    BillADO.Instance.InsertBill(table.Id);
-                    BillInforADO.Instance.InsertBillInfo(BillADO.Instance.GetMaxIdBill(), foodId, count);
+                    BillADO.Instance.AddBill(table.Id);
+                    BillInforADO.Instance.AddBillInfo(BillADO.Instance.GetMaxIdBill(), foodId, count);
                 }
-                else // bàn có người, bill đã tồn tại -> Insert bill dựa vào billId đã có
+                else // bàn có người, bill đã tồn tại -> Add bill dựa vào billId đã có
                 {
-                    BillInforADO.Instance.InsertBillInfo(billId, foodId, count);
+                    BillInforADO.Instance.AddBillInfo(billId, foodId, count);
                 }
                 ShowBill(table.Id);
                 LoadTable();  // update Status again
@@ -223,22 +223,22 @@ namespace CoffeeShop
             fAdmin f = new fAdmin();
             f.loginAccount = LoginAccount;
             // bắt sự kiện từ form con Admin
-            f.InsertFood += f_InsertFood;
-            f.DeleteFood += f_DeleteFood;
+            f.AddFood += f_AddFood;
+            f.RemoveFood += f_RemoveFood;
             f.UpdateFood += f_UpdateFood;
 
-            f.InsertCategory += F_InsertCategory;
-            f.DeleteCategory += F_DeleteCategory;
+            f.AddCategory += F_AddCategory;
+            f.RemoveCategory += F_RemoveCategory;
             f.UpdateCategory += F_UpdateCategory;
 
-            f.InsertTable += f_InsertTable;
-            f.DeleteTable += f_DeleteTable;
+            f.AddTable += f_AddTable;
+            f.RemoveTable += f_RemoveTable;
             f.UpdateTable += f_UpdateTable;
 
             f.ShowDialog();
         }
 
-        // Bắt sự kiện Insert, Delete, Updaet CATEGORY
+        // Bắt sự kiện Add, Remove, Updaet CATEGORY
         private void F_UpdateCategory(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
@@ -249,7 +249,7 @@ namespace CoffeeShop
             LoadTable();
             LoadCategory();
         }
-        private void F_DeleteCategory(object sender, EventArgs e)
+        private void F_RemoveCategory(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
             if (lsvBill.Tag != null)
@@ -259,7 +259,7 @@ namespace CoffeeShop
             LoadTable();
             LoadCategory();
         }
-        private void F_InsertCategory(object sender, EventArgs e)
+        private void F_AddCategory(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
             if (lsvBill.Tag != null)
@@ -270,21 +270,21 @@ namespace CoffeeShop
             LoadCategory();
         }
 
-        // Bắt sự kiện Insert, Delete, Updaet TABLE từ form Admin
+        // Bắt sự kiện Add, Remove, Updaet TABLE từ form Admin
         private void f_UpdateTable(object sender, EventArgs e)
         {
             LoadTable();
         }
-        private void f_DeleteTable(object sender, EventArgs e)
+        private void f_RemoveTable(object sender, EventArgs e)
         {
             LoadTable();
         }
-        private void f_InsertTable(object sender, EventArgs e)
+        private void f_AddTable(object sender, EventArgs e)
         {
             LoadTable();
         }
 
-        // Bắt sự kiện Insert, Delete, Updaet FOOD từ form Admin
+        // Bắt sự kiện Add, Remove, Updaet FOOD từ form Admin
         private void f_UpdateFood(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
@@ -293,7 +293,7 @@ namespace CoffeeShop
                 ShowBill((lsvBill.Tag as TableDTO).Id);
             }
         }
-        private void f_DeleteFood(object sender, EventArgs e)
+        private void f_RemoveFood(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
             if (lsvBill.Tag != null)
@@ -302,7 +302,7 @@ namespace CoffeeShop
             }
             LoadTable();
         }
-        private void f_InsertFood(object sender, EventArgs e)
+        private void f_AddFood(object sender, EventArgs e)
         {
             LoadFoodListByCategoryId((cbCategory.SelectedItem as CategoryDTO).Id);
             if (lsvBill.Tag != null)

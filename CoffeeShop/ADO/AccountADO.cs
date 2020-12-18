@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using CoffeeShop.DTO;
 
+// kiểu bool: Is + adj, Can + V, Has + Quá khứ phân từ(V2_ed) , Động từ số nhiều + N, Động từ số nhiều.
+
+
 namespace CoffeeShop.ADO
 {
     public class AccountADO
@@ -24,11 +27,11 @@ namespace CoffeeShop.ADO
             private set { instance = value; }
         }
 
-        public bool Login(string username, string password)
+        // CanGet
+        public bool CanGetUsernamePassword(string username, string password)
         {
             string query = "USP_Login @username , @password";
             DataTable result = DataProvider.Instance.ExecuteQuery(query, new object[] { username, password });
-
             return result.Rows.Count > 0;
         }
 
@@ -51,7 +54,8 @@ namespace CoffeeShop.ADO
         }
 
         // External account updates
-        public bool UpdateAccount(string username, string displayName, string password, string newPassword)
+        // channge personal information
+        public bool HasChangedAccount(string username, string displayName, string password, string newPassword)
         {
             string query = "USP_UpdateAccount @username , @display_name , @password , @newpassword";
             int result = DataProvider.Instance.ExecuteNonQuery(query, new object[] { username, displayName, password, newPassword });
@@ -64,22 +68,22 @@ namespace CoffeeShop.ADO
             return DataProvider.Instance.ExecuteQuery("select username, display_name, type from account");
         }
 
-        // Add account
-        public bool InsertAccount(string username, string displayName, int type)
+        // Name the method the return type bool: CanInsertAccount
+        public bool CanAddAccount(string username, string displayName, int type)
         {
             string query = string.Format("insert into account(username, display_name, type) values('{0}', N'{1}', {2})", username, displayName, type);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }
 
-        // update account inside admin.
-        public bool UpdateAccountInsideAdmin(string username, string displayName, int type)
+        // Name the method the return bool: CanInsertAccount
+        public bool CanUpdateAccount(string username, string displayName, int type)
         {
             string query = string.Format("update account set display_name = N'{0}', type = {1} where username = N'{2}'", displayName, type, username);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
             return result > 0;
         }
-        public bool DeleteAccount(string username)
+        public bool CanRemoveAccount(string username)
         {
             string query = string.Format("delete account where username = N'{0}'", username);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
@@ -87,7 +91,8 @@ namespace CoffeeShop.ADO
         }
 
         // reset password = 0
-        public bool ResetPassword(string username)
+        // CanResetPassword
+        public bool CanResetPassword(string username)
         {
             string query = string.Format("update account set password = N'0' where username = N'{0}'", username);
             int result = DataProvider.Instance.ExecuteNonQuery(query);
